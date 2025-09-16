@@ -1,0 +1,35 @@
+package br.com.jhonny.startlord.ui.screen.home
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import br.com.jhonny.startlord.ui.ComponentPreview
+import br.com.jhonny.startlord.ui.theme.StartLordTheme
+
+@Composable
+internal fun Header(
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = "\uD83C\uDF1F Github Repositories",
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifier,
+    )
+}
+
+@ComponentPreview
+@Composable
+private fun HeaderPreview() {
+    StartLordTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            Header(
+                modifier = Modifier
+                    .padding(innerPadding),
+            )
+        }
+    }
+}
