@@ -33,7 +33,7 @@ public class HomeViewModel(
         }
     }
 
-    private fun List<RepositoryVO>.toHomeUiState() = if (isNotEmpty()){
+    private fun List<RepositoryVO>.toHomeUiState() = if (isNotEmpty()) {
         HomeUiState.Loaded(this)
     } else {
         HomeUiState.Error

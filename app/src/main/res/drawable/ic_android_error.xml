@@ -7,9 +7,9 @@
 
     <!-- Grupo que desce e gira todo o robozinho -->
     <group
-        android:rotation="12"
         android:pivotX="12"
         android:pivotY="12"
+        android:rotation="12"
         android:translateY="2">
 
         <!-- Corpo / cabeça -->
@@ -19,17 +19,17 @@
 
         <!-- Antenas -->
         <path
-            android:strokeWidth="1.2"
-            android:strokeLineCap="round"
-            android:strokeColor="#7CB342"
             android:fillColor="@android:color/transparent"
-            android:pathData="M7,3 L5,1.2" />
+            android:pathData="M7,3 L5,1.2"
+            android:strokeWidth="1.2"
+            android:strokeColor="#7CB342"
+            android:strokeLineCap="round" />
         <path
-            android:strokeWidth="1.2"
-            android:strokeLineCap="round"
-            android:strokeColor="#7CB342"
             android:fillColor="@android:color/transparent"
-            android:pathData="M17,3 L19,1.2" />
+            android:pathData="M17,3 L19,1.2"
+            android:strokeWidth="1.2"
+            android:strokeColor="#7CB342"
+            android:strokeLineCap="round" />
 
         <!-- Olho esquerdo -->
         <path
@@ -38,50 +38,50 @@
 
         <!-- Olho direito (X) -->
         <path
-            android:strokeWidth="0.9"
-            android:strokeLineCap="round"
-            android:strokeLineJoin="round"
-            android:strokeColor="#FFFFFF"
             android:fillColor="@android:color/transparent"
-            android:pathData="M15.1,10.4 L16.6,11.9 M16.6,10.4 L15.1,11.9" />
+            android:pathData="M15.1,10.4 L16.6,11.9 M16.6,10.4 L15.1,11.9"
+            android:strokeWidth="0.9"
+            android:strokeColor="#FFFFFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
 
         <!-- Boca torta -->
         <path
-            android:strokeWidth="1.1"
-            android:strokeLineCap="round"
-            android:strokeColor="#4E342E"
             android:fillColor="@android:color/transparent"
-            android:pathData="M9.2,14.6c0.7,0.6 1.8,0.8 2.6,0.3 0.8,-0.5 1.6,-0.2 2.2,0.4" />
+            android:pathData="M9.2,14.6c0.7,0.6 1.8,0.8 2.6,0.3 0.8,-0.5 1.6,-0.2 2.2,0.4"
+            android:strokeWidth="1.1"
+            android:strokeColor="#4E342E"
+            android:strokeLineCap="round" />
 
         <!-- Braço esquerdo -->
         <path
-            android:strokeWidth="1.2"
-            android:strokeLineCap="round"
-            android:strokeColor="#7CB342"
             android:fillColor="@android:color/transparent"
-            android:pathData="M3.5,10.5 C2.6,11.6 2.6,13.0 3.5,14.1" />
+            android:pathData="M3.5,10.5 C2.6,11.6 2.6,13.0 3.5,14.1"
+            android:strokeWidth="1.2"
+            android:strokeColor="#7CB342"
+            android:strokeLineCap="round" />
 
         <!-- Braço direito com triângulo de erro -->
         <path
-            android:strokeWidth="0.9"
-            android:strokeLineJoin="round"
-            android:strokeColor="#F44336"
             android:fillColor="#FFCDD2"
-            android:pathData="M20.2,10.0 L18.0,14.0 L20.4,14.0 L20.2,10.0 Z" />
+            android:pathData="M20.2,10.0 L18.0,14.0 L20.4,14.0 L20.2,10.0 Z"
+            android:strokeWidth="0.9"
+            android:strokeColor="#F44336"
+            android:strokeLineJoin="round" />
 
         <!-- Sombra -->
         <path
-            android:fillColor="#5D9133"
             android:fillAlpha="0.16"
+            android:fillColor="#5D9133"
             android:pathData="M6,14c0,1.1 0.9,2 2,2h8c1.1,0 2,-0.9 2,-2v-1.2H6V14z" />
     </group>
 
     <!-- X de erro fora do grupo -->
     <path
-        android:strokeWidth="1.1"
-        android:strokeLineCap="round"
-        android:strokeColor="#B71C1C"
         android:fillColor="@android:color/transparent"
-        android:pathData="M17.8,8.6 L19.2,10.0 M19.2,8.6 L17.8,10.0" />
+        android:pathData="M17.8,8.6 L19.2,10.0 M19.2,8.6 L17.8,10.0"
+        android:strokeWidth="1.1"
+        android:strokeColor="#B71C1C"
+        android:strokeLineCap="round" />
 
 </vector>

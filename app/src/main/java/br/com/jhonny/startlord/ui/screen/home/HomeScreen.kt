@@ -35,7 +35,8 @@ public fun HomeScreeStateOwner(
 
     when (val state = uiState) {
         HomeUiState.Uninitialized,
-        HomeUiState.Loading -> {
+        HomeUiState.Loading,
+            -> {
             Log.d("HomeScreen", "$state")
             ProgressMessage(
                 modifier = modifier,

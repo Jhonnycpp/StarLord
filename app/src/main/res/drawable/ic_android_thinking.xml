@@ -12,17 +12,17 @@
 
     <!-- Antenas -->
     <path
-        android:strokeWidth="1.2"
-        android:strokeLineCap="round"
-        android:strokeColor="#7CB342"
         android:fillColor="@android:color/transparent"
-        android:pathData="M7,3 L5.5,1.5" />
+        android:pathData="M7,3 L5.5,1.5"
+        android:strokeWidth="1.2"
+        android:strokeColor="#7CB342"
+        android:strokeLineCap="round" />
     <path
-        android:strokeWidth="1.2"
-        android:strokeLineCap="round"
-        android:strokeColor="#7CB342"
         android:fillColor="@android:color/transparent"
-        android:pathData="M17,3 L18.5,1.5" />
+        android:pathData="M17,3 L18.5,1.5"
+        android:strokeWidth="1.2"
+        android:strokeColor="#7CB342"
+        android:strokeLineCap="round" />
 
     <!-- Olhos (olhando para cima/diagonal) -->
     <path
@@ -33,20 +33,20 @@
         android:pathData="M14.5,10.8a0.8,0.8 0 1,0 0.0001,0" />
 
     <!-- Pupilas deslocadas para cima/direita -->
-<!--    <path-->
-<!--        android:fillColor="#000000"-->
-<!--        android:pathData="M9.45,10.9a0.3,0.3 0 1,0 0.0001,0" />-->
-<!--    <path-->
-<!--        android:fillColor="#000000"-->
-<!--        android:pathData="M14.75,10.9a0.3,0.3 0 1,0 0.0001,0" />-->
+    <!--    <path-->
+    <!--        android:fillColor="#000000"-->
+    <!--        android:pathData="M9.45,10.9a0.3,0.3 0 1,0 0.0001,0" />-->
+    <!--    <path-->
+    <!--        android:fillColor="#000000"-->
+    <!--        android:pathData="M14.75,10.9a0.3,0.3 0 1,0 0.0001,0" />-->
 
     <!-- Boca pensativa (um traço curvo para baixo) -->
     <path
-        android:strokeWidth="1.1"
-        android:strokeLineCap="round"
-        android:strokeColor="#4E342E"
         android:fillColor="@android:color/transparent"
-        android:pathData="M9.5,14.0c1.5,0.8 3.0,0.8 5.0,0" />
+        android:pathData="M9.5,14.0c1.5,0.8 3.0,0.8 5.0,0"
+        android:strokeWidth="1.1"
+        android:strokeColor="#4E342E"
+        android:strokeLineCap="round" />
 
     <!-- Balão de pensamento (três bolinhas indo até uma nuvem pequena) -->
     <path

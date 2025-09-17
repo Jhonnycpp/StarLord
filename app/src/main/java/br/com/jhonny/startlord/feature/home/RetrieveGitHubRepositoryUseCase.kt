@@ -9,7 +9,7 @@ public class RetrieveGitHubRepositoryUseCase(
 ) {
 
     public suspend operator fun invoke(
-        page: Int
+        page: Int,
     ): List<RepositoryVO> = repository.getRepositories(page).toRepositoriesVO()
 
     private fun List<GitHubRepositoryDTO>.toRepositoriesVO() = map {

@@ -1,8 +1,8 @@
 package br.com.jhonny.startlord.di
 
 import br.com.jhonny.startlord.feature.home.RetrieveGitHubRepositoryUseCase
-import br.com.jhonny.startlord.feature.home.datasource.ReadGitHubDatasource
 import br.com.jhonny.startlord.feature.home.datasource.LocalGitHubDatasource
+import br.com.jhonny.startlord.feature.home.datasource.ReadGitHubDatasource
 import br.com.jhonny.startlord.feature.home.datasource.RemoteGitHubDatasource
 import br.com.jhonny.startlord.feature.home.datasource.WriteGitHubDataSource
 import br.com.jhonny.startlord.feature.home.repository.GitHubRepository

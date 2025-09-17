@@ -48,8 +48,7 @@ internal fun RepositoryImage(
         is ImageUiState.Success -> {
             val (painter, contentDescription) = if (imageState.painter != null) {
                 imageState.painter to "This is an image represents the repository $name and created by $author"
-            }
-            else {
+            } else {
                 painterResource(id = R.drawable.ic_launcher_foreground) to ""
             }
 
@@ -68,7 +67,7 @@ internal fun RepositoryImage(
 @ComponentPreview
 @Composable
 private fun RepositoryImagePreview(
-    @PreviewParameter(ImagePreviewProvider ::class)
+    @PreviewParameter(ImagePreviewProvider::class)
     data: Pair<RepositoryVO, ImageUiState>,
 ) {
     StartLordTheme {
