@@ -89,7 +89,7 @@ private fun HomeContent(
         modifier = modifier.fillMaxWidth(),
     ) {
         Header()
-        GitRepositoryList(repositories = RepositoryPreviewProvider.sample)
+        GitRepositoryList(repositories = repositories)
     }
 }
 

@@ -8,5 +8,5 @@ public sealed interface HomeUiState {
 
     public data class Loaded(val repositories: List<RepositoryVO>) : HomeUiState
 
-    public data class Error(val throwable: Throwable) : HomeUiState
+    public data object Error : HomeUiState
 }

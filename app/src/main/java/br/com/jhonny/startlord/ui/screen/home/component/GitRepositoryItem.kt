@@ -44,17 +44,11 @@ internal fun GitRepositoryItem(
             model = ImageRequest.Builder(
                 context = LocalContext.current,
             )
-                .data(data = item.imageUrl)
+                .data(data = item.userAvatar)
                 .crossfade(true)
                 .build()
         )
         val state by painter.state.collectAsState()
-
-        Text(
-            text = "Item ${item.id}",
-            modifier = Modifier.Companion
-                .padding(8.dp),
-        )
 
         RepositoryImage(
             name = item.name,
@@ -109,7 +103,7 @@ private fun GitRepositoryItemPreview() {
                     author = "Jhonatan",
                     starCount = 124,
                     forkCount = 37,
-                    imageUrl = "https://picsum.photos/200?random=1"
+                    userAvatar = "https://picsum.photos/200?random=1"
                 ),
             )
         }

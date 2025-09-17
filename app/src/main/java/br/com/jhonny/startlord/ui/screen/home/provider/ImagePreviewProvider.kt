@@ -13,7 +13,7 @@ internal class ImagePreviewProvider : PreviewParameterProvider<Pair<RepositoryVO
                 author = "Jhonatan",
                 starCount = 124,
                 forkCount = 37,
-                imageUrl = "https://picsum.photos/200?random=1"
+                userAvatar = "https://picsum.photos/200?random=1"
             ) to ImageUiState.Loading,
             RepositoryVO(
                 id = 1,
@@ -21,7 +21,7 @@ internal class ImagePreviewProvider : PreviewParameterProvider<Pair<RepositoryVO
                 author = "Jhonatan",
                 starCount = 124,
                 forkCount = 37,
-                imageUrl = "https://picsum.photos/200?random=1"
+                userAvatar = "https://picsum.photos/200?random=1"
             ) to ImageUiState.Empty,
             RepositoryVO(
                 id = 1,
@@ -29,7 +29,7 @@ internal class ImagePreviewProvider : PreviewParameterProvider<Pair<RepositoryVO
                 author = "Jhonatan",
                 starCount = 124,
                 forkCount = 37,
-                imageUrl = "https://picsum.photos/200?random=1"
+                userAvatar = "https://picsum.photos/200?random=1"
             ) to ImageUiState.Error,
             RepositoryVO(
                 id = 1,
@@ -37,7 +37,7 @@ internal class ImagePreviewProvider : PreviewParameterProvider<Pair<RepositoryVO
                 author = "Jhonatan",
                 starCount = 124,
                 forkCount = 37,
-                imageUrl = "https://picsum.photos/200?random=1"
+                userAvatar = "https://picsum.photos/200?random=1"
             ) to ImageUiState.Success(
                 painter = null,
             ),

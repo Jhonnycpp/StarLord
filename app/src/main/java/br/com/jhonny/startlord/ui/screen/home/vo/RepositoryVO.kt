@@ -6,5 +6,5 @@ public data class RepositoryVO(
     val author: String,
     val starCount: Int,
     val forkCount: Int,
-    val imageUrl: String,
+    val userAvatar: String,
 )
