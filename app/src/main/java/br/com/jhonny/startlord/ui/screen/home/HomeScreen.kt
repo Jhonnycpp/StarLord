@@ -90,7 +90,9 @@ private fun HomeContent(
         modifier = modifier.fillMaxWidth(),
     ) {
         Header()
-        GitRepositoryList(repositories = repositories)
+        GitRepositoryList(repositories = repositories) {
+            onUiEvent(HomeUiEvent.RequestMoreData)
+        }
     }
 }
 

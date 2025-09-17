@@ -8,9 +8,7 @@ public class RetrieveGitHubRepositoryUseCase(
     private val repository: GitHubRepository,
 ) {
 
-    public suspend operator fun invoke(
-        page: Int,
-    ): List<RepositoryVO> = repository.getRepositories(page).toRepositoriesVO()
+    public suspend operator fun invoke(): List<RepositoryVO> = repository.getRepositories().toRepositoriesVO()
 
     private fun List<GitHubRepositoryDTO>.toRepositoriesVO() = map {
         RepositoryVO(

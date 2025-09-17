@@ -9,17 +9,26 @@ internal class GitHubRepositoryImpl(
     private val localDatasource: WriteGitHubDataSource,
     private val remoteDatasource: ReadGitHubDatasource,
 ) : GitHubRepository {
+    private var currentPage = 1
 
-    override suspend fun getRepositories(
-        page: Int,
-    ): List<GitHubRepositoryDTO> {
-        val repositoryResponse = localDatasource.getRepositories(page) ?: retrieveFromRemote(page)
-        return repositoryResponse?.items ?: emptyList()
+    override suspend fun getRepositories(): List<GitHubRepositoryDTO> {
+        val currentRepositories = (1 until currentPage).map { page ->
+            localDatasource.getRepositories(page)
+        }
+        val localRepositories = localDatasource.getRepositories(currentPage)
+        val remoteRepositories = localRepositories ?: retrieveFromRemote(currentPage)
+
+        val repositories = currentRepositories + (localRepositories ?: remoteRepositories)
+
+        return repositories.flatMap {
+            it?.items ?: emptyList()
+        }
     }
 
     private suspend fun retrieveFromRemote(
         page: Int,
     ): GitHubRepositoryResponse? = remoteDatasource.getRepositories(page)?.also {
         localDatasource.save(page, it)
+        currentPage++
     }
 }
