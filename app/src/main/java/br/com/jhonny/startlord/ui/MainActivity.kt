@@ -1,7 +1,6 @@
 package br.com.jhonny.startlord.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -71,14 +70,9 @@ public class MainActivity : ComponentActivity() {
                         NavigationCommand.Idle -> Unit
                     }
 
-                    with(navController) {
-                        val previousRoute = previousBackStackEntry?.destination?.route
-                        val currentRoute = currentBackStackEntry?.destination?.route
-
-                        Log.d("MainActivity", "Previous: $previousRoute Current: $currentRoute")
-                    }
-
-                    BackHandler {
+                    BackHandler(
+                        enabled = navController.previousBackStackEntry != null,
+                    ) {
                         navigationManager.back()
                     }
                 }
