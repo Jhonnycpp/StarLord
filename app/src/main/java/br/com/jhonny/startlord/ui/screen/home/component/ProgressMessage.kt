@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.jhonny.startlord.ui.ComponentPreview
-import br.com.jhonny.startlord.ui.screen.home.Header
 import br.com.jhonny.startlord.ui.theme.StartLordTheme
 
 @Composable

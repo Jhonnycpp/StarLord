@@ -14,8 +14,9 @@ composeBom = "2025.09.00"
 coreKtx = "1.17.0"
 kotlinxSerializationJson = "1.9.0"
 koinBom = "4.1.1"
+navigation = "2.9.4"
 retrofit = "3.0.0"
-lifecycleRuntimeKtx = "2.9.3"
+lifecycleRuntimeKtx = "2.9.4"
 
 ####################################################################################################
 #                                       Test                                                       #
@@ -34,6 +35,9 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation"}
+androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation"}
 di-koin-android = { group = "io.insert-koin", name = "koin-android" }
 di-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 di-koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koinBom" }

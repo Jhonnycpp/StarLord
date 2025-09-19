@@ -1,4 +1,4 @@
-package br.com.jhonny.startlord.ui.screen.home.state
+package br.com.jhonny.startlord.ui.screen.home.list.state
 
 import br.com.jhonny.startlord.ui.screen.home.vo.RepositoryVO
 

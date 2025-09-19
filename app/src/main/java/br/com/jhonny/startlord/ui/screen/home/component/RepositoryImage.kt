@@ -2,9 +2,7 @@ package br.com.jhonny.startlord.ui.screen.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,8 +13,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.startlord.R
 import br.com.jhonny.startlord.ui.ComponentPreview
+import br.com.jhonny.startlord.ui.screen.home.list.state.ImageUiState
 import br.com.jhonny.startlord.ui.screen.home.provider.ImagePreviewProvider
-import br.com.jhonny.startlord.ui.screen.home.state.ImageUiState
 import br.com.jhonny.startlord.ui.screen.home.vo.RepositoryVO
 import br.com.jhonny.startlord.ui.theme.StartLordTheme
 
@@ -33,7 +31,7 @@ internal fun RepositoryImage(
             -> {
             Column(modifier) {
                 CircularProgressIndicator(
-                    modifier = Modifier.Companion.padding(32.dp)
+                    modifier = Modifier.padding(32.dp)
                 )
             }
         }
@@ -56,9 +54,7 @@ internal fun RepositoryImage(
                 painter = painter,
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                modifier = modifier,
             )
         }
     }

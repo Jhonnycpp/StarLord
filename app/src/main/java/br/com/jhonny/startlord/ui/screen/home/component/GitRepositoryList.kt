@@ -27,7 +27,8 @@ import kotlinx.coroutines.flow.map
 internal fun GitRepositoryList(
     modifier: Modifier = Modifier,
     repositories: List<RepositoryVO>,
-    onLoadMore: () -> Unit,
+    onLoadMore: () -> Unit = {},
+    onItemClick: (RepositoryVO) -> Unit = {},
 ) {
     val columnCount = with(LocalConfiguration.current) {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) 4 else 2
@@ -57,7 +58,9 @@ internal fun GitRepositoryList(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         content = {
             items(repositories) {
-                GitRepositoryItem(item = it)
+                GitRepositoryItem(item = it) {
+                    onItemClick(it)
+                }
             }
         },
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -77,9 +80,7 @@ private fun GitRepositoryListPreview(
                     paddingValues = innerPadding
                 ),
                 repositories = repositories,
-            ) {
-
-            }
+            )
         }
     }
 }

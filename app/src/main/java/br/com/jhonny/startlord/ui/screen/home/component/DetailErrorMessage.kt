@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -20,19 +21,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.startlord.R
 import br.com.jhonny.startlord.ui.ComponentPreview
-import br.com.jhonny.startlord.ui.screen.home.list.OnHomeUiEvent
-import br.com.jhonny.startlord.ui.screen.home.list.state.HomeUiEvent
+import br.com.jhonny.startlord.ui.screen.home.detail.OnDetailUiEvent
+import br.com.jhonny.startlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.startlord.ui.theme.StartLordTheme
 
 @Composable
-public fun ErrorMessage(
+public fun DetailErrorMessage(
     modifier: Modifier = Modifier,
-    onUiEvent: OnHomeUiEvent,
+    onUiEvent: OnDetailUiEvent = {},
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Header()
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,9 +51,7 @@ public fun ErrorMessage(
                 textAlign = TextAlign.Center,
             )
             Button(
-                onClick = {
-                    onUiEvent(HomeUiEvent.RequestMoreData)
-                },
+                onClick = { onUiEvent(DetailUiEvent.GetRepositoryData) },
                 modifier = Modifier.padding(top = 32.dp)
             ) {
                 Icon(
@@ -62,6 +60,20 @@ public fun ErrorMessage(
                 )
                 Text(
                     text = "Retry",
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+
+            Button(
+                onClick = { onUiEvent(DetailUiEvent.Back) },
+                modifier = Modifier.padding(top = 32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back to home."
+                )
+                Text(
+                    text = "Back",
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
@@ -74,13 +86,11 @@ public fun ErrorMessage(
 private fun ErrorMessagePreview() {
     StartLordTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            ErrorMessage(
+            DetailErrorMessage(
                 modifier = Modifier.padding(
                     paddingValues = innerPadding
                 ),
-            ) {
-
-            }
+            )
         }
     }
 }

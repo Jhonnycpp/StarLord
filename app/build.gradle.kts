@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "br.com.jhonny.startlord"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -69,6 +69,10 @@ dependencies {
     implementation(libs.http.retrofit)
     implementation(libs.http.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.navigation)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

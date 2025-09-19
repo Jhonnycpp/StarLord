@@ -2,152 +2,39 @@ package br.com.jhonny.startlord.ui.screen.home.provider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import br.com.jhonny.startlord.ui.screen.home.vo.RepositoryVO
+import java.util.Date
+import kotlin.random.Random
 
 internal class RepositoryPreviewProvider : PreviewParameterProvider<List<RepositoryVO>> {
     override val values: Sequence<List<RepositoryVO>>
         get() = sequenceOf(
-            listOf(
-                RepositoryVO(
-                    id = 1,
-                    name = "Lumos",
-                    author = "Jhonatan",
-                    starCount = 124,
-                    forkCount = 37,
-                    userAvatar = "https://picsum.photos/200?random=1"
-                ),
-            ),
-            listOf(
-                RepositoryVO(
-                    id = 1,
-                    name = "Lumos",
-                    author = "Jhonatan",
-                    starCount = 124,
-                    forkCount = 37,
-                    userAvatar = "https://picsum.photos/200?random=1"
-                ),
-            ),
-            listOf(
-                RepositoryVO(
-                    id = 3,
-                    name = "Orion",
-                    author = "Carlos",
-                    starCount = 321,
-                    forkCount = 58,
-                    userAvatar = "https://picsum.photos/200?random=3"
-                ),
-                RepositoryVO(
-                    id = 31,
-                    name = "NebulaCore",
-                    author = "Henrique",
-                    starCount = 1899,
-                    forkCount = 399,
-                    userAvatar = "https://picsum.photos/200?random=31"
-                ),
-            ),
-            listOf(
-                RepositoryVO(
-                    id = 2,
-                    name = "Nebula",
-                    author = "Alice",
-                    starCount = 982,
-                    forkCount = 210,
-                    userAvatar = "https://picsum.photos/200?random=2"
-                ),
-                RepositoryVO(
-                    id = 31,
-                    name = "NebulaCore",
-                    author = "Henrique",
-                    starCount = 1899,
-                    forkCount = 399,
-                    userAvatar = "https://picsum.photos/200?random=31"
-                ),
-                RepositoryVO(
-                    id = 34,
-                    name = "Apollo",
-                    author = "Sofia",
-                    starCount = 1390,
-                    forkCount = 287,
-                    userAvatar = "https://picsum.photos/200?random=34"
-                ),
-            ),
-            listOf(
-                RepositoryVO(
-                    id = 2,
-                    name = "Nebula",
-                    author = "Alice",
-                    starCount = 982,
-                    forkCount = 210,
-                    userAvatar = "https://picsum.photos/200?random=2"
-                ),
-                RepositoryVO(
-                    id = 31,
-                    name = "NebulaCore",
-                    author = "Henrique",
-                    starCount = 1899,
-                    forkCount = 399,
-                    userAvatar = "https://picsum.photos/200?random=31"
-                ),
-                RepositoryVO(
-                    id = 34,
-                    name = "Apollo",
-                    author = "Sofia",
-                    starCount = 1390,
-                    forkCount = 287,
-                    userAvatar = "https://picsum.photos/200?random=34"
-                ),
-                RepositoryVO(
-                    id = 37,
-                    name = "AtlasX",
-                    author = "Bruno",
-                    starCount = 341,
-                    forkCount = 72,
-                    userAvatar = "https://picsum.photos/200?random=37"
-                ),
-            ),
-            listOf(
-                RepositoryVO(
-                    id = 2,
-                    name = "Nebula",
-                    author = "Alice",
-                    starCount = 982,
-                    forkCount = 210,
-                    userAvatar = "https://picsum.photos/200?random=2"
-                ),
-                RepositoryVO(
-                    id = 3,
-                    name = "Orion",
-                    author = "Carlos",
-                    starCount = 321,
-                    forkCount = 58,
-                    userAvatar = "https://picsum.photos/200?random=3"
-                ),
-                RepositoryVO(
-                    id = 4,
-                    name = "Andromeda",
-                    author = "Marina",
-                    starCount = 1456,
-                    forkCount = 330,
-                    userAvatar = "https://picsum.photos/200?random=4"
-                ),
-                RepositoryVO(
-                    id = 12,
-                    name = "Atlas",
-                    author = "Camila",
-                    starCount = 332,
-                    forkCount = 71,
-                    userAvatar = "https://picsum.photos/200?random=12"
-                ),
-                RepositoryVO(
-                    id = 31,
-                    name = "NebulaCore",
-                    author = "Henrique",
-                    starCount = 1899,
-                    forkCount = 399,
-                    userAvatar = "https://picsum.photos/200?random=31"
-                ),
-            ),
-            sample,
+            createRandomSample(1),
+            createRandomSample(2),
+            createRandomSample(3),
+            createRandomSample(4),
+            createRandomSample(5),
+            createRandomSample(50),
         )
+
+    fun createRandomSample(count: Int): List<RepositoryVO> {
+        if (sample.isEmpty()) return emptyList()
+
+        return (1..count).map { index ->
+            val baseRepo = sample.random()
+            val newId = (100_000L + index) + Random.nextLong(100_000)
+
+            baseRepo.copy(
+                id = newId.toInt(),
+                name = "${baseRepo.name} #${index + 1}",
+                userAvatar = "https://picsum.photos/200?random=$newId",
+                description = "Descrição aleatória para ${baseRepo.name}. Item número $index.",
+                starCount = Random.nextInt(50, 3000),
+                forkCount = Random.nextInt(10, baseRepo.starCount.coerceAtLeast(11)),
+                watcherCount = Random.nextInt(20, 500),
+                issueCount = Random.nextInt(5, 100)
+            )
+        }
+    }
 
     private companion object {
         val sample = listOf(
@@ -155,402 +42,130 @@ internal class RepositoryPreviewProvider : PreviewParameterProvider<List<Reposit
                 id = 1,
                 name = "Lumos",
                 author = "Jhonatan",
+                userAvatar = "https://picsum.photos/200?random=1",
+                description = "A sample description for Lumos repository.",
+                language = "Kotlin",
+                licenseName = "MIT",
                 starCount = 124,
                 forkCount = 37,
-                userAvatar = "https://picsum.photos/200?random=1"
+                watcherCount = 60,
+                issueCount = 12,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 2,
                 name = "Nebula",
                 author = "Alice",
+                userAvatar = "https://picsum.photos/200?random=2",
+                description = "Nebula: exploring the cosmos of code.",
+                language = "Java",
+                licenseName = "Apache 2.0",
                 starCount = 982,
                 forkCount = 210,
-                userAvatar = "https://picsum.photos/200?random=2"
+                watcherCount = 450,
+                issueCount = 55,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 3,
                 name = "Orion",
                 author = "Carlos",
+                userAvatar = "https://picsum.photos/200?random=3",
+                description = "Orion is a constellation of features.",
+                language = "Python",
+                licenseName = "GNU GPLv3",
                 starCount = 321,
                 forkCount = 58,
-                userAvatar = "https://picsum.photos/200?random=3"
+                watcherCount = 120,
+                issueCount = 22,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 4,
                 name = "Andromeda",
                 author = "Marina",
+                userAvatar = "https://picsum.photos/200?random=4",
+                description = "Andromeda project, vast and expansive.",
+                language = "Swift",
+                licenseName = "BSD 3-Clause",
                 starCount = 1456,
                 forkCount = 330,
-                userAvatar = "https://picsum.photos/200?random=4"
+                watcherCount = 700,
+                issueCount = 90,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 5,
                 name = "Cosmos",
                 author = "Rafael",
+                userAvatar = "https://picsum.photos/200?random=5",
+                description = "The entire Cosmos in a single app.",
+                language = "JavaScript",
+                licenseName = "MIT",
                 starCount = 765,
                 forkCount = 120,
-                userAvatar = "https://picsum.photos/200?random=5"
+                watcherCount = 300,
+                issueCount = 40,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 6,
                 name = "Eclipse",
                 author = "Fernanda",
+                userAvatar = "https://picsum.photos/200?random=6",
+                description = "Eclipse: overshadowing the competition.",
+                language = "Kotlin",
+                licenseName = "Apache 2.0",
                 starCount = 543,
                 forkCount = 87,
-                userAvatar = "https://picsum.photos/200?random=6"
+                watcherCount = 250,
+                issueCount = 30,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 7,
                 name = "Nova",
                 author = "Thiago",
+                userAvatar = "https://picsum.photos/200?random=7",
+                description = "A supernova of innovation.",
+                language = "Java",
+                licenseName = "MIT",
                 starCount = 2389,
                 forkCount = 456,
-                userAvatar = "https://picsum.photos/200?random=7"
-            ),
-            RepositoryVO(
-                id = 8,
-                name = "Aurora",
-                author = "Beatriz",
-                starCount = 876,
-                forkCount = 142,
-                userAvatar = "https://picsum.photos/200?random=8"
-            ),
-            RepositoryVO(
-                id = 9,
-                name = "Zenith",
-                author = "Lucas",
-                starCount = 412,
-                forkCount = 63,
-                userAvatar = "https://picsum.photos/200?random=9"
-            ),
-            RepositoryVO(
-                id = 10,
-                name = "Horizon",
-                author = "Gabriela",
-                starCount = 159,
-                forkCount = 24,
-                userAvatar = "https://picsum.photos/200?random=10"
-            ),
-            RepositoryVO(
-                id = 11,
-                name = "Quantum",
-                author = "Pedro",
-                starCount = 923,
-                forkCount = 187,
-                userAvatar = "https://picsum.photos/200?random=11"
-            ),
-            RepositoryVO(
-                id = 12,
-                name = "Atlas",
-                author = "Camila",
-                starCount = 332,
-                forkCount = 71,
-                userAvatar = "https://picsum.photos/200?random=12"
-            ),
-            RepositoryVO(
-                id = 13,
-                name = "Helix",
-                author = "André",
-                starCount = 1467,
-                forkCount = 309,
-                userAvatar = "https://picsum.photos/200?random=13"
-            ),
-            RepositoryVO(
-                id = 14,
-                name = "NebulaX",
-                author = "Larissa",
-                starCount = 542,
-                forkCount = 98,
-                userAvatar = "https://picsum.photos/200?random=14"
-            ),
-            RepositoryVO(
-                id = 15,
-                name = "Aether",
-                author = "Rodrigo",
-                starCount = 219,
-                forkCount = 43,
-                userAvatar = "https://picsum.photos/200?random=15"
-            ),
-            RepositoryVO(
-                id = 16,
-                name = "Ignis",
-                author = "Juliana",
-                starCount = 1278,
-                forkCount = 267,
-                userAvatar = "https://picsum.photos/200?random=16"
-            ),
-            RepositoryVO(
-                id = 17,
-                name = "Vortex",
-                author = "Mateus",
-                starCount = 391,
-                forkCount = 76,
-                userAvatar = "https://picsum.photos/200?random=17"
-            ),
-            RepositoryVO(
-                id = 18,
-                name = "Nimbus",
-                author = "Isabela",
-                starCount = 652,
-                forkCount = 134,
-                userAvatar = "https://picsum.photos/200?random=18"
-            ),
-            RepositoryVO(
-                id = 19,
-                name = "Lyra",
-                author = "Felipe",
-                starCount = 1043,
-                forkCount = 205,
-                userAvatar = "https://picsum.photos/200?random=19"
-            ),
-            RepositoryVO(
-                id = 20,
-                name = "Equinox",
-                author = "Vanessa",
-                starCount = 821,
-                forkCount = 176,
-                userAvatar = "https://picsum.photos/200?random=20"
-            ),
-            RepositoryVO(
-                id = 21,
-                name = "Stellar",
-                author = "Eduardo",
-                starCount = 312,
-                forkCount = 54,
-                userAvatar = "https://picsum.photos/200?random=21"
-            ),
-            RepositoryVO(
-                id = 22,
-                name = "Phoenix",
-                author = "Patrícia",
-                starCount = 1589,
-                forkCount = 342,
-                userAvatar = "https://picsum.photos/200?random=22"
-            ),
-            RepositoryVO(
-                id = 23,
-                name = "Draco",
-                author = "Guilherme",
-                starCount = 277,
-                forkCount = 62,
-                userAvatar = "https://picsum.photos/200?random=23"
-            ),
-            RepositoryVO(
-                id = 24,
-                name = "Pegasus",
-                author = "Natália",
-                starCount = 1345,
-                forkCount = 289,
-                userAvatar = "https://picsum.photos/200?random=24"
-            ),
-            RepositoryVO(
-                id = 25,
-                name = "Hydra",
-                author = "Marcelo",
-                starCount = 498,
-                forkCount = 112,
-                userAvatar = "https://picsum.photos/200?random=25"
-            ),
-            RepositoryVO(
-                id = 26,
-                name = "Comet",
-                author = "Sabrina",
-                starCount = 722,
-                forkCount = 156,
-                userAvatar = "https://picsum.photos/200?random=26"
-            ),
-            RepositoryVO(
-                id = 27,
-                name = "Eos",
-                author = "Diego",
-                starCount = 943,
-                forkCount = 201,
-                userAvatar = "https://picsum.photos/200?random=27"
-            ),
-            RepositoryVO(
-                id = 28,
-                name = "Auriga",
-                author = "Tatiane",
-                starCount = 315,
-                forkCount = 67,
-                userAvatar = "https://picsum.photos/200?random=28"
-            ),
-            RepositoryVO(
-                id = 29,
-                name = "Solaris",
-                author = "Ricardo",
-                starCount = 1176,
-                forkCount = 254,
-                userAvatar = "https://picsum.photos/200?random=29"
-            ),
-            RepositoryVO(
-                id = 30,
-                name = "Vega",
-                author = "Monica",
-                starCount = 456,
-                forkCount = 98,
-                userAvatar = "https://picsum.photos/200?random=30"
-            ),
-            RepositoryVO(
-                id = 31,
-                name = "NebulaCore",
-                author = "Henrique",
-                starCount = 1899,
-                forkCount = 399,
-                userAvatar = "https://picsum.photos/200?random=31"
-            ),
-            RepositoryVO(
-                id = 32,
-                name = "Pulsar",
-                author = "Clara",
-                starCount = 603,
-                forkCount = 122,
-                userAvatar = "https://picsum.photos/200?random=32"
-            ),
-            RepositoryVO(
-                id = 33,
-                name = "Galileo",
-                author = "Roberto",
-                starCount = 268,
-                forkCount = 51,
-                userAvatar = "https://picsum.photos/200?random=33"
-            ),
-            RepositoryVO(
-                id = 34,
-                name = "Apollo",
-                author = "Sofia",
-                starCount = 1390,
-                forkCount = 287,
-                userAvatar = "https://picsum.photos/200?random=34"
-            ),
-            RepositoryVO(
-                id = 35,
-                name = "Minerva",
-                author = "Leonardo",
-                starCount = 492,
-                forkCount = 113,
-                userAvatar = "https://picsum.photos/200?random=35"
-            ),
-            RepositoryVO(
-                id = 36,
-                name = "Janus",
-                author = "Carolina",
-                starCount = 764,
-                forkCount = 154,
-                userAvatar = "https://picsum.photos/200?random=36"
-            ),
-            RepositoryVO(
-                id = 37,
-                name = "AtlasX",
-                author = "Bruno",
-                starCount = 341,
-                forkCount = 72,
-                userAvatar = "https://picsum.photos/200?random=37"
-            ),
-            RepositoryVO(
-                id = 38,
-                name = "Chronos",
-                author = "Paula",
-                starCount = 1725,
-                forkCount = 365,
-                userAvatar = "https://picsum.photos/200?random=38"
-            ),
-            RepositoryVO(
-                id = 39,
-                name = "Titan",
-                author = "Alexandre",
-                starCount = 827,
-                forkCount = 176,
-                userAvatar = "https://picsum.photos/200?random=39"
-            ),
-            RepositoryVO(
-                id = 40,
-                name = "Selene",
-                author = "Mariana",
-                starCount = 198,
-                forkCount = 45,
-                userAvatar = "https://picsum.photos/200?random=40"
-            ),
-            RepositoryVO(
-                id = 41,
-                name = "Gaia",
-                author = "Rodrigo",
-                starCount = 1367,
-                forkCount = 295,
-                userAvatar = "https://picsum.photos/200?random=41"
-            ),
-            RepositoryVO(
-                id = 42,
-                name = "Oceanus",
-                author = "Bianca",
-                starCount = 474,
-                forkCount = 109,
-                userAvatar = "https://picsum.photos/200?random=42"
-            ),
-            RepositoryVO(
-                id = 43,
-                name = "Icarus",
-                author = "Fábio",
-                starCount = 1098,
-                forkCount = 243,
-                userAvatar = "https://picsum.photos/200?random=43"
-            ),
-            RepositoryVO(
-                id = 44,
-                name = "Nyx",
-                author = "Daniela",
-                starCount = 212,
-                forkCount = 52,
-                userAvatar = "https://picsum.photos/200?random=44"
-            ),
-            RepositoryVO(
-                id = 45,
-                name = "Chronicle",
-                author = "Vitor",
-                starCount = 981,
-                forkCount = 207,
-                userAvatar = "https://picsum.photos/200?random=45"
-            ),
-            RepositoryVO(
-                id = 46,
-                name = "Erebus",
-                author = "Simone",
-                starCount = 653,
-                forkCount = 133,
-                userAvatar = "https://picsum.photos/200?random=46"
-            ),
-            RepositoryVO(
-                id = 47,
-                name = "Prometheus",
-                author = "Luiz",
-                starCount = 742,
-                forkCount = 165,
-                userAvatar = "https://picsum.photos/200?random=47"
-            ),
-            RepositoryVO(
-                id = 48,
-                name = "Zephyr",
-                author = "Catarina",
-                starCount = 889,
-                forkCount = 179,
-                userAvatar = "https://picsum.photos/200?random=48"
-            ),
-            RepositoryVO(
-                id = 49,
-                name = "Oberon",
-                author = "Rafaela",
-                starCount = 316,
-                forkCount = 64,
-                userAvatar = "https://picsum.photos/200?random=49"
+                watcherCount = 1000,
+                issueCount = 150,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
             ),
             RepositoryVO(
                 id = 50,
                 name = "Hades",
                 author = "Fernando",
+                userAvatar = "https://picsum.photos/200?random=50",
+                description = "Exploring the underworld of low-level programming.",
+                language = "C++",
+                licenseName = "Unlicense",
                 starCount = 1594,
                 forkCount = 327,
-                userAvatar = "https://picsum.photos/200?random=50"
-            ),
+                watcherCount = 800,
+                issueCount = 120,
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date()
+            )
         )
     }
 }

@@ -9,7 +9,6 @@ internal class GitHubRepositoryImpl(
     private val localDatasource: WriteGitHubDataSource,
     private val remoteDatasource: ReadGitHubDatasource,
 ) : GitHubRepository {
-    private var currentPage = 1
 
     override suspend fun getRepositories(): List<GitHubRepositoryDTO> {
         val currentRepositories = (1 until currentPage).map { page ->
@@ -25,10 +24,27 @@ internal class GitHubRepositoryImpl(
         }
     }
 
+    override suspend fun getRepository(id: Int): GitHubRepositoryDTO? {
+        for (page in 1..currentPage) {
+            val items = localDatasource.getRepositories(page)?.items
+            val repository = items?.find {
+                it.id == id
+            }
+
+            if (repository != null) return repository
+        }
+
+        return null
+    }
+
     private suspend fun retrieveFromRemote(
         page: Int,
     ): GitHubRepositoryResponse? = remoteDatasource.getRepositories(page)?.also {
         localDatasource.save(page, it)
         currentPage++
+    }
+
+    private companion object {
+        private var currentPage = 1
     }
 }

@@ -5,7 +5,7 @@ internal class FailGitHubRequestException(
 ) : Throwable(buildMessage(backendMessage)) {
 
     private companion object {
-         fun buildMessage(backendMessage: String?): String {
+        fun buildMessage(backendMessage: String?): String {
             val baseMessage = "Fail to get repositories."
             return if (backendMessage.isNullOrBlank()) {
                 baseMessage

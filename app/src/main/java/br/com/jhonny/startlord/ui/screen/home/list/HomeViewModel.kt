@@ -1,11 +1,13 @@
-package br.com.jhonny.startlord.ui.screen.home
+package br.com.jhonny.startlord.ui.screen.home.list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.jhonny.startlord.feature.home.RetrieveGitHubRepositoryUseCase
-import br.com.jhonny.startlord.ui.screen.home.state.HomeUiEvent
-import br.com.jhonny.startlord.ui.screen.home.state.HomeUiState
+import br.com.jhonny.startlord.ui.navigation.Navigation
+import br.com.jhonny.startlord.ui.navigation.Route
+import br.com.jhonny.startlord.ui.screen.home.list.state.HomeUiEvent
+import br.com.jhonny.startlord.ui.screen.home.list.state.HomeUiState
 import br.com.jhonny.startlord.ui.screen.home.vo.RepositoryVO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +20,7 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 @OptIn(ExperimentalAtomicApi::class)
 public class HomeViewModel(
     private val retrieveGitHubRepositoryUseCase: RetrieveGitHubRepositoryUseCase,
+    private val navigation: Navigation,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Uninitialized)
     public val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -27,7 +30,7 @@ public class HomeViewModel(
     public fun onUiEvent(event: HomeUiEvent) {
         when (event) {
             HomeUiEvent.RequestMoreData -> requestMoreData()
-            HomeUiEvent.ShowRepositoryInfo -> {}
+            is HomeUiEvent.ShowRepositoryInfo -> navigation.navigate(Route.Detail(event.id))
         }
     }
 

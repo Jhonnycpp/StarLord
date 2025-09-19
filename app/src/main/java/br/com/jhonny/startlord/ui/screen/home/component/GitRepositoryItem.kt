@@ -1,11 +1,13 @@
 package br.com.jhonny.startlord.ui.screen.home.component
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -17,18 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.startlord.ui.ComponentPreview
-import br.com.jhonny.startlord.ui.screen.home.state.ImageUiState
 import br.com.jhonny.startlord.ui.screen.home.vo.RepositoryVO
 import br.com.jhonny.startlord.ui.theme.StartLordTheme
-import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import java.util.Date
 
 @Composable
 internal fun GitRepositoryItem(
     modifier: Modifier = Modifier,
     item: RepositoryVO,
+    onClick: () -> Unit = {},
 ) {
     Column(
         horizontalAlignment = Alignment.Companion.CenterHorizontally,
@@ -38,7 +40,8 @@ internal fun GitRepositoryItem(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
                 shape = MaterialTheme.shapes.extraSmall,
-            ),
+            )
+            .clickable(onClick = onClick),
     ) {
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(
@@ -54,18 +57,21 @@ internal fun GitRepositoryItem(
             name = item.name,
             author = item.author,
             imageState = state.toImageUiState(),
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         )
 
         Text(
             text = "${item.name} by ${item.author}",
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .padding(start = 8.dp),
         )
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp, bottom = 4.dp),
         ) {
@@ -79,13 +85,6 @@ internal fun GitRepositoryItem(
             )
         }
     }
-}
-
-private fun AsyncImagePainter.State.toImageUiState() = when (this) {
-    is AsyncImagePainter.State.Empty -> ImageUiState.Empty
-    is AsyncImagePainter.State.Error -> ImageUiState.Error
-    is AsyncImagePainter.State.Loading -> ImageUiState.Loading
-    is AsyncImagePainter.State.Success -> ImageUiState.Success(painter)
 }
 
 @ComponentPreview
@@ -103,7 +102,15 @@ private fun GitRepositoryItemPreview() {
                     author = "Jhonatan",
                     starCount = 124,
                     forkCount = 37,
-                    userAvatar = "https://picsum.photos/200?random=1"
+                    userAvatar = "https://picsum.photos/200?random=1",
+                    description = "The Magic Mask for Android",
+                    language = "Kotlin",
+                    licenseName = "GNU General Public License v3.0",
+                    createdAt = Date(),
+                    updatedAt = Date(),
+                    pushedAt = Date(),
+                    watcherCount = 33,
+                    issueCount = 2,
                 ),
             )
         }

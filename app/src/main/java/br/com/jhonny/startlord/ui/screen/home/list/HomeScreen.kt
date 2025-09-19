@@ -1,6 +1,5 @@
-package br.com.jhonny.startlord.ui.screen.home
+package br.com.jhonny.startlord.ui.screen.home.list
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,10 +15,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.jhonny.startlord.ui.DevicePreview
 import br.com.jhonny.startlord.ui.screen.home.component.ErrorMessage
 import br.com.jhonny.startlord.ui.screen.home.component.GitRepositoryList
+import br.com.jhonny.startlord.ui.screen.home.component.Header
 import br.com.jhonny.startlord.ui.screen.home.component.ProgressMessage
+import br.com.jhonny.startlord.ui.screen.home.list.state.HomeUiEvent
+import br.com.jhonny.startlord.ui.screen.home.list.state.HomeUiState
 import br.com.jhonny.startlord.ui.screen.home.provider.RepositoryPreviewProvider
-import br.com.jhonny.startlord.ui.screen.home.state.HomeUiEvent
-import br.com.jhonny.startlord.ui.screen.home.state.HomeUiState
 import br.com.jhonny.startlord.ui.screen.home.vo.RepositoryVO
 import br.com.jhonny.startlord.ui.theme.StartLordTheme
 import org.koin.androidx.compose.koinViewModel
@@ -37,7 +37,6 @@ public fun HomeScreeStateOwner(
         HomeUiState.Uninitialized,
         HomeUiState.Loading,
             -> {
-            Log.d("HomeScreen", "$state")
             ProgressMessage(
                 modifier = modifier,
             )
@@ -48,7 +47,6 @@ public fun HomeScreeStateOwner(
         }
 
         is HomeUiState.Loaded -> {
-            Log.d("HomeScreen", "HomeUiState.Loaded")
             HomeScreen(
                 onUiEvent = viewModel::onUiEvent,
                 repositories = state.repositories,
@@ -57,7 +55,6 @@ public fun HomeScreeStateOwner(
         }
 
         is HomeUiState.Error -> {
-            Log.d("HomeScreen", "HomeUiState.Error")
             ErrorMessage(
                 onUiEvent = viewModel::onUiEvent,
                 modifier = modifier,
@@ -83,15 +80,18 @@ private fun HomeScreen(
 private fun HomeContent(
     modifier: Modifier = Modifier,
     repositories: List<RepositoryVO>,
-    onUiEvent: OnHomeUiEvent,
+    onUiEvent: OnHomeUiEvent = {},
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth(),
     ) {
         Header()
-        GitRepositoryList(repositories = repositories) {
-            onUiEvent(HomeUiEvent.RequestMoreData)
+        GitRepositoryList(
+            repositories = repositories,
+            onLoadMore = { onUiEvent(HomeUiEvent.RequestMoreData) },
+        ) {
+            onUiEvent(HomeUiEvent.ShowRepositoryInfo(it.id))
         }
     }
 }
@@ -109,9 +109,7 @@ private fun HomeScreenPreview(
                     paddingValues = innerPadding
                 ),
                 repositories = repositories,
-            ) {
-
-            }
+            )
         }
     }
 }

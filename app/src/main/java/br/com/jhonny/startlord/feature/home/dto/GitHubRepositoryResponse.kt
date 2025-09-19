@@ -23,6 +23,28 @@ public data class GitHubRepositoryDTO(
     val starCount: Int,
     @SerialName("forks_count")
     val forksCount: Int,
+    @SerialName("description")
+    val description: String?,
+    @SerialName("language")
+    val language: String,
+    @SerialName("license")
+    val license: LicenseDTO?,
+    @SerialName("created_at")
+    val createdAt: String,
+    @SerialName("updated_at")
+    val updatedAt: String,
+    @SerialName("pushed_at")
+    val pushedAt: String,
+    @SerialName("watchers_count")
+    val watchersCount: Int,
+    @SerialName("open_issues")
+    val openIssuesCount: Int,
+)
+
+@Serializable
+public data class LicenseDTO(
+    @SerialName("name")
+    val name: String,
 )
 
 @Serializable
