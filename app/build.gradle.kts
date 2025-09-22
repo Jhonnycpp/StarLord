@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "br.com.jhonny.startlord"
+    namespace = "br.com.jhonny.starlord"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "br.com.jhonny.startlord"
+        applicationId = "br.com.jhonny.starlord"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -61,11 +61,11 @@ kover {
         filters {
             excludes {
                 classes(
-                    "br.com.jhonny.startlord.MainApplication",
-                    "br.com.jhonny.startlord.di.MainModuleKt",
-                    "br.com.jhonny.startlord.*.dto.*",
-                    "br.com.jhonny.startlord.*.vo.*",
-                    "br.com.jhonny.startlord.*.state.*",
+                    "br.com.jhonny.starlord.MainApplication",
+                    "br.com.jhonny.starlord.di.MainModuleKt",
+                    "br.com.jhonny.starlord.*.dto.*",
+                    "br.com.jhonny.starlord.*.vo.*",
+                    "br.com.jhonny.starlord.*.state.*",
                 )
             }
         }
