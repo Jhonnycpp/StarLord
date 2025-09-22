@@ -23,7 +23,7 @@ internal class RemoteGitHubDatasource(
             response.body() ?: throw DecodeRequestBodyException()
         } else {
             val errorBody = response.errorBody()?.string()
-            throw FailGitHubRequestException(errorBody)
+            throw FailGitHubRequestException(response.code(), errorBody)
         }
     }.onFailure {
         Log.d("RemoteGitHubDatasource", "Fail retrieve the value from remote to page $page.", it)

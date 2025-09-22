@@ -3,7 +3,7 @@ package br.com.jhonny.startlord.ui.screen.home.list
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.jhonny.startlord.feature.home.RetrieveGitHubRepositoryUseCase
+import br.com.jhonny.startlord.feature.home.usecase.RetrieveGitHubRepositoryUseCase
 import br.com.jhonny.startlord.ui.navigation.Navigation
 import br.com.jhonny.startlord.ui.navigation.Route
 import br.com.jhonny.startlord.ui.screen.home.list.state.HomeUiEvent

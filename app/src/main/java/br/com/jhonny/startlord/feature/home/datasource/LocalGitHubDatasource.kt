@@ -17,6 +17,10 @@ internal class LocalGitHubDatasource(
     }.getOrNull()
 
     override suspend fun save(page: Int, repositories: GitHubRepositoryResponse) {
-        cache[page] = repositories
+        runCatching {
+            cache[page] = repositories
+        }.onFailure {
+            Log.d("LocalGitHubDatasource", "Fail save the value to cache to page [$page].", it)
+        }
     }
 }

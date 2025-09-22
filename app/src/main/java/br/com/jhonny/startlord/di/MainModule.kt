@@ -1,14 +1,16 @@
 package br.com.jhonny.startlord.di
 
-import br.com.jhonny.startlord.feature.home.RetrieveGitHubRepositoryUseCase
-import br.com.jhonny.startlord.feature.home.RetrieveRepositoryUseCase
 import br.com.jhonny.startlord.feature.home.datasource.LocalGitHubDatasource
+import br.com.jhonny.startlord.feature.home.datasource.PageDatasource
+import br.com.jhonny.startlord.feature.home.datasource.PageManagerDatasource
 import br.com.jhonny.startlord.feature.home.datasource.ReadGitHubDatasource
 import br.com.jhonny.startlord.feature.home.datasource.RemoteGitHubDatasource
 import br.com.jhonny.startlord.feature.home.datasource.WriteGitHubDataSource
 import br.com.jhonny.startlord.feature.home.repository.GitHubRepository
 import br.com.jhonny.startlord.feature.home.repository.GitHubRepositoryImpl
 import br.com.jhonny.startlord.feature.home.service.GitHubRepositoryService
+import br.com.jhonny.startlord.feature.home.usecase.RetrieveGitHubRepositoryUseCase
+import br.com.jhonny.startlord.feature.home.usecase.RetrieveRepositoryUseCase
 import br.com.jhonny.startlord.ui.navigation.Navigation
 import br.com.jhonny.startlord.ui.navigation.NavigationManager
 import br.com.jhonny.startlord.ui.screen.home.detail.DetailViewModel
@@ -41,10 +43,15 @@ private val repositoryModule = module {
         LocalGitHubDatasource()
     }
 
+    single<PageDatasource> {
+        PageManagerDatasource()
+    }
+
     factory<GitHubRepository> {
         GitHubRepositoryImpl(
             localDatasource = get(),
             remoteDatasource = get(),
+            pageManager = get(),
         )
     }
 }

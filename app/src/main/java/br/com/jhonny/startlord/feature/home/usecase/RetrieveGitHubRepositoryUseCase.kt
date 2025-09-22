@@ -1,4 +1,4 @@
-package br.com.jhonny.startlord.feature.home
+package br.com.jhonny.startlord.feature.home.usecase
 
 import br.com.jhonny.startlord.extension.toDate
 import br.com.jhonny.startlord.feature.home.dto.GitHubRepositoryDTO

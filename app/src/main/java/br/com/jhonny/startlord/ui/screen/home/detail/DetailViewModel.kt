@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import br.com.jhonny.startlord.feature.home.RetrieveRepositoryUseCase
+import br.com.jhonny.startlord.feature.home.usecase.RetrieveRepositoryUseCase
 import br.com.jhonny.startlord.ui.navigation.Navigation
 import br.com.jhonny.startlord.ui.navigation.Route
 import br.com.jhonny.startlord.ui.screen.home.detail.state.DetailUiEvent
