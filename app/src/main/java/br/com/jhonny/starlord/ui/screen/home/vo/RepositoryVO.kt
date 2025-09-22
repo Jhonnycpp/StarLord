@@ -8,7 +8,7 @@ public data class RepositoryVO(
     val author: String,
     val userAvatar: String,
     val description: String,
-    val language: String,
+    val language: String?,
     val licenseName: String?,
     val starCount: Int,
     val forkCount: Int,

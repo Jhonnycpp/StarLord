@@ -204,9 +204,11 @@ private fun DetailPortrait(
                 .padding(8.dp)
                 .verticalScroll(scrollState),
         ) {
-            Text(
-                text = "Language: ${repository.language}"
-            )
+            if (!repository.language.isNullOrBlank()) {
+                Text(
+                    text = "Language: ${repository.language}"
+                )
+            }
             if (!repository.licenseName.isNullOrBlank()) {
                 Text(
                     text = "License: ${repository.licenseName}"
@@ -337,9 +339,11 @@ private fun DetailLandscape(
                             modifier = Modifier
                                 .fillMaxWidth()
                         ) {
-                            Text(
-                                text = "Language: ${repository.language}"
-                            )
+                            if (!repository.language.isNullOrBlank()) {
+                                Text(
+                                    text = "Language: ${repository.language}"
+                                )
+                            }
                             if (!repository.licenseName.isNullOrBlank()) {
                                 Text(
                                     text = "License: ${repository.licenseName}"

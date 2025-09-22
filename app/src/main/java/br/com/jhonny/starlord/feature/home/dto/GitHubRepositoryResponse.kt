@@ -26,7 +26,7 @@ public data class GitHubRepositoryDTO(
     @SerialName("description")
     val description: String?,
     @SerialName("language")
-    val language: String,
+    val language: String?,
     @SerialName("license")
     val license: LicenseDTO?,
     @SerialName("created_at")
