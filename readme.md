@@ -1,7 +1,8 @@
 # StarLord
 
 StarLord é um projeto desenvolvido para Android com o kotlin.
-A proposta do aplicativo é mostrar ao usuário os repositórios do github com mais estrelas ⭐
+
+A proposta do aplicativo é listar os repositórios do github com mais estrelas ⭐
 feitos na linguagem kotlin.
 
 ## 🚀 Começando
@@ -76,8 +77,8 @@ Este projeto utiliza um conjunto moderno de tecnologias para desenvolvimento And
   - Coil para carregamento eficiente de imagens.
 - Navegação: Jetpack Navigation Compose para navegação entre telas do Compose.
 - Testes:
-  - Unitários: JUnit 5, MockK, Turbine (para Flows), KotlinX Coroutines Test.
-  - Instrumentados: AndroidX Test (JUnit, Espresso), Compose UI Test, Navigation Testing.
+  - Unitários: JUnit 4, MockK, Turbine (para Flows), KotlinX Coroutines Test.
+  - Instrumentados: JUnit 4, Compose UI Test, Navigation Testing.
 - Utilitários AndroidX/Jetpack: Core KTX, Lifecycle KTX.
 - Build System: Gradle com Kotlin DSL.
 - Cobertura de Código: JaCoCo.
@@ -111,3 +112,14 @@ Este comando gera um relatório de cobertura de código unitário e instrumentad
 ```
 
 Para visualizar basta abrir o relatorio em html na pasta `./app/build/reports/jacoco/jacocoFullReport/html/index.html` no seu navegador de preferencia.
+
+## 7. App
+O possui a funcionalidade de exibir os repositórios do github com mais estrelas ⭐
+|-|-|
+|Retrato|Deitado|
+|<video src="./doc/videos/repositories-scroll-portrait.mp4"/>|<video src="./doc/videos/repositories-scroll-landscape.mp4"/>|
+
+E também possui a funcionalidade de exibir as informações do repositório selecionado.
+|-|-|
+|Retrato|Deitado|
+|<video src="./doc/videos/repository-detail-portrait.mp4"/>|<video src="./doc/videos/repository-detail-landscape.mp4"/>|
