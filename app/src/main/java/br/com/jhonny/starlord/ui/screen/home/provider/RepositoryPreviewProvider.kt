@@ -5,6 +5,25 @@ import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 import java.util.Date
 import kotlin.random.Random
 
+/**
+ * Provides sample data for [RepositoryVO] lists to be used in Composable previews.
+ *
+ * This class implements [PreviewParameterProvider] to supply different scenarios
+ * for previewing lists of repositories, such as lists with varying numbers of items.
+ *
+ * The [values] property generates a sequence of lists, each created by the
+ * [createRandomSample] function. Each list in the sequence contains a different
+ * number of [RepositoryVO] items (1, 2, 3, 4, 5, and 50).
+ *
+ * The [createRandomSample] function generates a list of [RepositoryVO] objects
+ * based on a predefined [sample] list. It randomly selects items from the sample
+ * and modifies them with unique IDs, names, avatars, descriptions, and random
+ * counts for stars, forks, watchers, and issues. This ensures that each preview
+ * displays varied and realistic-looking data.
+ *
+ * The [sample] companion object provides a static list of base [RepositoryVO]
+ * objects that are used as templates for generating the random samples.
+ */
 internal class RepositoryPreviewProvider : PreviewParameterProvider<List<RepositoryVO>> {
     override val values: Sequence<List<RepositoryVO>>
         get() = sequenceOf(
