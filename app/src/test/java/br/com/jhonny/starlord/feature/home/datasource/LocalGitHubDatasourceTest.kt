@@ -1,14 +1,13 @@
 package br.com.jhonny.starlord.feature.home.datasource
 
-import br.com.jhonny.starlord.TestScopeRule
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
 import br.com.jhonny.starlord.feature.home.dto.LicenseDTO
 import br.com.jhonny.starlord.feature.home.dto.RepositoryOwnerDTO
+import br.com.jhonny.starlord.rule.TestCoroutineScopeRule
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -16,10 +15,9 @@ import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.ConcurrentHashMap
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class LocalGitHubDatasourceTest {
     @get:Rule
-    private val scope = TestScopeRule()
+    private val scope = TestCoroutineScopeRule()
 
     @Test
     fun `should successfully retrieve repositories`() = runTest {

@@ -7,6 +7,7 @@ import kotlin.concurrent.atomics.incrementAndFetch
 @OptIn(ExperimentalAtomicApi::class)
 internal class PageManagerDatasource : PageDatasource {
     private var _page = AtomicInt(1)
+
     override val page: Int
         get() = _page.load()
 

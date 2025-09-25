@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.jhonny.starlord.ui.DevicePreview
@@ -37,9 +38,14 @@ public fun HomeScreeStateOwner(
         HomeUiState.Uninitialized,
         HomeUiState.Loading,
             -> {
-            ProgressMessage(
-                modifier = modifier,
-            )
+            Column(
+                modifier = Modifier
+                    .testTag("HomeScreenLoading")
+            ) {
+                ProgressMessage(
+                    modifier = modifier,
+                )
+            }
 
             LaunchedEffect(Unit) {
                 viewModel.onUiEvent(HomeUiEvent.RequestMoreData)
@@ -50,14 +56,16 @@ public fun HomeScreeStateOwner(
             HomeScreen(
                 onUiEvent = viewModel::onUiEvent,
                 repositories = state.repositories,
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("HomeScreen"),
             )
         }
 
         is HomeUiState.Error -> {
             ErrorMessage(
                 onUiEvent = viewModel::onUiEvent,
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("HomeScreenError"),
             )
         }
     }
@@ -86,7 +94,10 @@ private fun HomeContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth(),
     ) {
-        Header()
+        Header(
+            modifier = Modifier
+                .testTag("HomeScreenHeader"),
+        )
         GitRepositoryList(
             repositories = repositories,
             onLoadMore = { onUiEvent(HomeUiEvent.RequestMoreData) },

@@ -17,7 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import br.com.jhonny.starlord.extension.toImageUiState
 import br.com.jhonny.starlord.ui.ComponentPreview
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 import br.com.jhonny.starlord.ui.theme.StarLordTheme
@@ -35,6 +37,7 @@ internal fun GitRepositoryItem(
     Column(
         horizontalAlignment = Alignment.Companion.CenterHorizontally,
         modifier = modifier
+            .testTag("GitRepositoryItem")
             .fillMaxWidth()
             .border(
                 width = 1.dp,
@@ -46,10 +49,9 @@ internal fun GitRepositoryItem(
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(
                 context = LocalContext.current,
-            )
-                .data(data = item.userAvatar)
+            ).data(data = item.userAvatar)
                 .crossfade(true)
-                .build()
+                .build(),
         )
         val state by painter.state.collectAsState()
 
@@ -57,7 +59,8 @@ internal fun GitRepositoryItem(
             name = item.name,
             author = item.author,
             imageState = state.toImageUiState(),
-            modifier = modifier
+            modifier = Modifier
+                .testTag("RepositoryImage")
                 .fillMaxWidth()
                 .wrapContentHeight()
         )

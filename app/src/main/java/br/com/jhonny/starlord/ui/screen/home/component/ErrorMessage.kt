@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,7 @@ import br.com.jhonny.starlord.ui.theme.StarLordTheme
 @Composable
 public fun ErrorMessage(
     modifier: Modifier = Modifier,
-    onUiEvent: OnHomeUiEvent,
+    onUiEvent: OnHomeUiEvent = {},
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -37,6 +38,7 @@ public fun ErrorMessage(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
+                .testTag("ErrorMessage")
                 .fillMaxSize()
         ) {
             Image(
@@ -54,7 +56,9 @@ public fun ErrorMessage(
                 onClick = {
                     onUiEvent(HomeUiEvent.RequestMoreData)
                 },
-                modifier = Modifier.padding(top = 32.dp)
+                modifier = Modifier
+                    .testTag("RetryButton")
+                    .padding(top = 32.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,

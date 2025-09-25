@@ -1,10 +1,10 @@
 package br.com.jhonny.starlord.feature.home.usecase
 
-import br.com.jhonny.starlord.TestScopeRule
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.LicenseDTO
 import br.com.jhonny.starlord.feature.home.dto.RepositoryOwnerDTO
 import br.com.jhonny.starlord.feature.home.repository.GitHubRepository
+import br.com.jhonny.starlord.rule.TestCoroutineScopeRule
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -16,7 +16,7 @@ import java.util.Date
 
 class RetrieveGitHubRepositoryUseCaseTest {
     @get:Rule
-    private val scope = TestScopeRule()
+    private val scope = TestCoroutineScopeRule()
     private val gitHubRepository = mockk<GitHubRepository>()
     private val useCase = RetrieveGitHubRepositoryUseCase(gitHubRepository)
 

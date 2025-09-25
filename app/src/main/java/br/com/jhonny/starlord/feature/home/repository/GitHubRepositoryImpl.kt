@@ -5,7 +5,9 @@ import br.com.jhonny.starlord.feature.home.datasource.ReadGitHubDatasource
 import br.com.jhonny.starlord.feature.home.datasource.WriteGitHubDataSource
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@OptIn(ExperimentalAtomicApi::class)
 internal class GitHubRepositoryImpl(
     private val localDatasource: WriteGitHubDataSource,
     private val remoteDatasource: ReadGitHubDatasource,

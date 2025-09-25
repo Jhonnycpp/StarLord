@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import br.com.jhonny.starlord.ui.ComponentPreview
 import br.com.jhonny.starlord.ui.theme.StarLordTheme
@@ -19,7 +20,7 @@ internal fun Header(
         text = "\uD83C\uDF1F Github Repositories",
         style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Center,
-        modifier = modifier,
+        modifier = modifier.testTag("Header"),
     )
 }
 

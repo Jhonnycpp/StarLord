@@ -1,4 +1,4 @@
-package br.com.jhonny.starlord.ui.screen.home.component
+package br.com.jhonny.starlord.extension
 
 import br.com.jhonny.starlord.ui.screen.home.list.state.ImageUiState
 import coil3.compose.AsyncImagePainter

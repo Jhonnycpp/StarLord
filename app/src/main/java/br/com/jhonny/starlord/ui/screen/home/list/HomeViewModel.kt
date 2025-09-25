@@ -9,6 +9,8 @@ import br.com.jhonny.starlord.ui.navigation.Route
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiEvent
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +23,7 @@ import kotlin.concurrent.atomics.ExperimentalAtomicApi
 public class HomeViewModel(
     private val retrieveGitHubRepositoryUseCase: RetrieveGitHubRepositoryUseCase,
     private val navigation: Navigation,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Uninitialized)
     public val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -42,7 +45,7 @@ public class HomeViewModel(
             return
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             Log.d("HomeViewModel", "Requesting more data.")
             val repositories = retrieveGitHubRepositoryUseCase()
             _uiState.update { repositories.toHomeUiState() }

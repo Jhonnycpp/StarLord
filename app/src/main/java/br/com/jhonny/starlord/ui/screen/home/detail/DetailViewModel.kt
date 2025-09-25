@@ -9,6 +9,8 @@ import br.com.jhonny.starlord.ui.navigation.Navigation
 import br.com.jhonny.starlord.ui.navigation.Route
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiState
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,10 +21,13 @@ public class DetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val navigation: Navigation,
     private val retrieveRepositoryUseCase: RetrieveRepositoryUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
-    private val repositoryDetail: Route.Detail? = runCatching {
-        savedStateHandle.toRoute<Route.Detail>()
-    }.getOrNull()
+    private val repositoryDetail: Route.Detail? by lazy {
+        runCatching {
+            savedStateHandle.toRoute<Route.Detail>()
+        }.getOrNull()
+    }
 
     private val _uiState = MutableStateFlow<DetailUiState>(DetailUiState.Uninitialized)
     public val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()
@@ -31,7 +36,7 @@ public class DetailViewModel(
         when (event) {
             DetailUiEvent.Back -> navigation.back()
             DetailUiEvent.GetRepositoryData -> {
-                viewModelScope.launch {
+                viewModelScope.launch(dispatcher) {
                     val route = repositoryDetail ?: return@launch _uiState.update { DetailUiState.Error }
 
                     getRepositoryData(route)

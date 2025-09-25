@@ -1,11 +1,11 @@
 package br.com.jhonny.starlord.feature.home.datasource
 
-import br.com.jhonny.starlord.TestScopeRule
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
 import br.com.jhonny.starlord.feature.home.dto.LicenseDTO
 import br.com.jhonny.starlord.feature.home.dto.RepositoryOwnerDTO
 import br.com.jhonny.starlord.feature.home.service.GitHubRepositoryService
+import br.com.jhonny.starlord.rule.TestCoroutineScopeRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -17,7 +17,7 @@ import retrofit2.Response
 
 class RemoteGitHubDatasourceTest {
     @get:Rule
-    private val scope = TestScopeRule()
+    private val scope = TestCoroutineScopeRule()
     private val gitHubRepositoryService = mockk<GitHubRepositoryService>()
     private val datasource = RemoteGitHubDatasource(gitHubRepositoryService)
 

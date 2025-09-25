@@ -27,14 +27,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import br.com.jhonny.starlord.extension.toImageUiState
 import br.com.jhonny.starlord.ui.DevicePreview
 import br.com.jhonny.starlord.ui.screen.home.component.DetailErrorMessage
 import br.com.jhonny.starlord.ui.screen.home.component.Header
 import br.com.jhonny.starlord.ui.screen.home.component.ProgressMessage
 import br.com.jhonny.starlord.ui.screen.home.component.RepositoryImage
-import br.com.jhonny.starlord.ui.screen.home.component.toImageUiState
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
@@ -57,9 +58,14 @@ public fun DetailScreenStateOwner(
         DetailUiState.Uninitialized,
         DetailUiState.Loading,
             -> {
-            ProgressMessage(
-                modifier = modifier,
-            )
+            Column(
+                modifier = modifier
+                    .testTag("DetailScreenLoading"),
+            ) {
+                ProgressMessage(
+                    modifier = modifier,
+                )
+            }
 
             LaunchedEffect(Unit) {
                 viewModel.onUiEvent(DetailUiEvent.GetRepositoryData)
@@ -68,7 +74,8 @@ public fun DetailScreenStateOwner(
 
         is DetailUiState.Loaded -> {
             DetailScreen(
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("DetailScreen"),
                 repository = state.repository,
                 onUiEvent = viewModel::onUiEvent,
             )
@@ -76,7 +83,8 @@ public fun DetailScreenStateOwner(
 
         is DetailUiState.Error -> {
             DetailErrorMessage(
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("DetailErrorMessage"),
                 onUiEvent = viewModel::onUiEvent,
             )
         }
@@ -105,13 +113,15 @@ private fun DetailContent(
     with(LocalConfiguration.current) {
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             DetailPortrait(
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("DetailPortrait"),
                 repository = repository,
                 onUiEvent = onUiEvent,
             )
         } else {
             DetailLandscape(
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("DetailLandscape"),
                 repository = repository,
                 onUiEvent = onUiEvent,
             )
@@ -134,10 +144,9 @@ private fun DetailPortrait(
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(
                 context = LocalContext.current,
-            )
-                .data(data = repository.userAvatar)
+            ).data(data = repository.userAvatar)
                 .crossfade(true)
-                .build()
+                .build(),
         )
         val state by painter.state.collectAsState()
 
@@ -165,6 +174,7 @@ private fun DetailPortrait(
             author = repository.author,
             imageState = state.toImageUiState(),
             modifier = modifier
+                .testTag("RepositoryImage")
                 .size(200.dp),
         )
 
@@ -273,10 +283,9 @@ private fun DetailLandscape(
                 val painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(
                         context = LocalContext.current,
-                    )
-                        .data(data = repository.userAvatar)
+                    ).data(data = repository.userAvatar)
                         .crossfade(true)
-                        .build()
+                        .build(),
                 )
                 val state by painter.state.collectAsState()
 

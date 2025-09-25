@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.ui.ComponentPreview
@@ -58,13 +59,19 @@ internal fun GitRepositoryList(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         content = {
             items(repositories) {
-                GitRepositoryItem(item = it) {
+                GitRepositoryItem(
+                    item = it,
+                    modifier = Modifier
+                        .testTag("GitRepositoryItem"),
+                ) {
                     onItemClick(it)
                 }
             }
         },
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-        modifier = modifier.padding(top = 16.dp)
+        modifier = modifier
+            .testTag("GitRepositoryList")
+            .padding(top = 16.dp)
     )
 }
 

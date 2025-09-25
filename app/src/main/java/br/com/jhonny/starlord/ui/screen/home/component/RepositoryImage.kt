@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,10 @@ internal fun RepositoryImage(
         is ImageUiState.Loading,
         is ImageUiState.Empty,
             -> {
-            Column(modifier) {
+            Column(
+                modifier = modifier
+                    .testTag("ProgressIndicator")
+            ) {
                 CircularProgressIndicator(
                     modifier = Modifier.padding(32.dp)
                 )
@@ -39,7 +43,9 @@ internal fun RepositoryImage(
         is ImageUiState.Error -> {
             Image(
                 painter = painterResource(id = R.drawable.ic_android_error),
-                contentDescription = "Error loading image"
+                contentDescription = "Error loading image",
+                modifier = modifier
+                    .testTag("ErrorImage")
             )
         }
 
@@ -54,7 +60,8 @@ internal fun RepositoryImage(
                 painter = painter,
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Crop,
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("RepositoryImage"),
             )
         }
     }

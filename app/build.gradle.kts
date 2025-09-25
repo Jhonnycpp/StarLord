@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.kover)
+    alias(libs.plugins.jacoco)
     alias(libs.plugins.serialization)
 }
 
@@ -20,9 +20,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments += "clearPackageData" to "true"
     }
 
     buildTypes {
+        debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -50,24 +56,26 @@ android {
     }
 
     testOptions {
+        animationsDisabled = true
+
         unitTests {
             isReturnDefaultValues = true
         }
-    }
-}
 
-kover {
-    reports {
-        filters {
-            excludes {
-                classes(
-                    "br.com.jhonny.starlord.MainApplication",
-                    "br.com.jhonny.starlord.di.MainModuleKt",
-                    "br.com.jhonny.starlord.*.dto.*",
-                    "br.com.jhonny.starlord.*.vo.*",
-                    "br.com.jhonny.starlord.*.state.*",
-                )
-            }
+        unitTests.all {
+            val availableProcessors = Runtime.getRuntime().availableProcessors() / 2
+            println("Running test on max parallel forks: $availableProcessors")
+            it.maxParallelForks = availableProcessors
+        }
+    }
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/NOTICE.md"
+            )
         }
     }
 }
@@ -79,6 +87,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.icons)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
@@ -97,6 +106,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
 
+    testImplementation(libs.flow.test.turbine)
     testImplementation(libs.junit)
     testImplementation(libs.mockk.android)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -105,6 +115,64 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.androidx.navigation.testing)
+
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+val jacocoExcludes = listOf(
+    "**/R.class",
+    "**/R$*.class",
+    "**/BuildConfig.*",
+    "**/Manifest*.*",
+    "**/MainApplication.class",
+    "**/di/MainModuleKt.class",
+    "**/NavHostControllerKt.*",
+    "**/dto/**",
+    "**/vo/**",
+    "**/state/**",
+    "**/ui/**/provider/**",
+    "**/ui/theme/**"
+)
+
+tasks.register<JacocoReport>("jacocoFullReport") {
+    group = "verification"
+    description = "Generates merged coverage report for unit and android tests"
+
+    dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
+
+    executionData.setFrom(
+        files(
+            fileTree(layout.buildDirectory.dir("jacoco")) {
+                include("**/*.exec")
+            },
+            fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage")) {
+                include("**/*.exec")
+            },
+            fileTree(layout.buildDirectory.dir("outputs/code_coverage/debugAndroidTest/connected")) {
+                include("**/*.ec")
+            }
+        )
+    )
+
+    val javaClasses = layout.buildDirectory.dir("intermediates/javac/debug/classes").map {
+        fileTree(it) {
+            exclude(jacocoExcludes)
+        }
+    }
+    val kotlinClasses = layout.buildDirectory.dir("tmp/kotlin-classes/debug").map {
+        fileTree(it) {
+            exclude(jacocoExcludes)
+        }
+    }
+
+    classDirectories.setFrom(files(javaClasses, kotlinClasses))
+    sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
 }
