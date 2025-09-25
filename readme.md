@@ -116,14 +116,12 @@ Para visualizar basta abrir o relatorio em html na pasta `./app/build/reports/ja
 ## 7. App
 O possui a funcionalidade de exibir os repositórios do github com mais estrelas ⭐
 
-|-|-|
 |Retrato|Deitado|
 |-|-|
 |<video src="./doc/videos/repositories-scroll-portrait.mp4"/>|<video src="./doc/videos/repositories-scroll-landscape.mp4"/>|
 
 E também possui a funcionalidade de exibir as informações do repositório selecionado.
 
-|-|-|
 |Retrato|Deitado|
 |-|-|
 |<video src="./doc/videos/repository-detail-portrait.mp4"/>|<video src="./doc/videos/repository-detail-landscape.mp4"/>|
