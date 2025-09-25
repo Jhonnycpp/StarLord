@@ -5,6 +5,15 @@ import br.com.jhonny.starlord.ui.screen.home.list.state.ImageUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 import java.util.Date
 
+/**
+ * This class provides a sequence of `Pair<RepositoryVO, ImageUiState>` for use in Jetpack Compose previews.
+ *
+ * It is used to generate different states of the UI for previewing purposes. Each pair in the sequence represents a
+ * specific combination of a `RepositoryVO` and an `ImageUiState`, allowing developers to visualize how the UI
+ * behaves in various scenarios (e.g., loading, error, success, empty).
+ *
+ * The `values` property returns a sequence of these pairs.
+ */
 internal class ImagePreviewProvider : PreviewParameterProvider<Pair<RepositoryVO, ImageUiState>> {
     override val values: Sequence<Pair<RepositoryVO, ImageUiState>>
         get() = sequenceOf(
