@@ -365,20 +365,14 @@ private fun DetailLandscape(
                             style = MaterialTheme.typography.bodySmall,
                         )
 
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                        ) {
-                            Text(
-                                text = "Last pushed at: ${repository.pushedAt}",
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                            Text(
-                                text = "Last updated at: ${repository.updatedAt}",
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                        }
+                        Text(
+                            text = "Last pushed at: ${repository.pushedAt}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        Text(
+                            text = "Last updated at: ${repository.updatedAt}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
                     }
                 }
                 HorizontalDivider(
