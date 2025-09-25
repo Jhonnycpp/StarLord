@@ -18,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.extension.toImageUiState
 import br.com.jhonny.starlord.ui.ComponentPreview
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
@@ -66,7 +68,7 @@ internal fun GitRepositoryItem(
         )
 
         Text(
-            text = "${item.name} by ${item.author}",
+            text = stringResource(R.string.repository_name_and_author, item.name, item.author),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(start = 8.dp),

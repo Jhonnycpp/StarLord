@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
@@ -43,7 +44,7 @@ internal fun RepositoryImage(
         is ImageUiState.Error -> {
             Image(
                 painter = painterResource(id = R.drawable.ic_android_error),
-                contentDescription = "Error loading image",
+                contentDescription = stringResource(R.string.error_image_content_description),
                 modifier = modifier
                     .testTag("ErrorImage")
             )
@@ -51,9 +52,9 @@ internal fun RepositoryImage(
 
         is ImageUiState.Success -> {
             val (painter, contentDescription) = if (imageState.painter != null) {
-                imageState.painter to "This is an image represents the repository $name and created by $author"
+                imageState.painter to stringResource(R.string.repository_image_content_provider, name, author)
             } else {
-                painterResource(id = R.drawable.ic_launcher_foreground) to ""
+                painterResource(id = R.drawable.ic_launcher_foreground) to stringResource(R.string.error_image_content_description)
             }
 
             Image(

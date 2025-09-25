@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">StarLord</string>
+    <string name="repository_name_and_author">%1$s by %2$s</string>
+    <string name="repository_language_name">Language: %1$s</string>
+    <string name="repository_license_name">License: %1$s</string>
+    <string name="repository_created_at">Created at: %1$s</string>
+    <string name="repository_pushed_at">Pushed at: %1$s</string>
+    <string name="repository_updated_at">Updated at: %1$s</string>
+    <string name="back_button_content_description">Back</string>
+    <string name="error_image_content_description">Error loading image.</string>
+    <string name="error_detail_message">An error occurred on fetch the git repository.</string>
+    <string name="error_detail_retry_content_description">Retry fetch git repository.</string>
+    <string name="error_retry_button">Retry</string>
+    <string name="error_back_content_description">Back to home.</string>
+    <string name="error_back_button">Back</string>
+    <string name="error_home_retry">An error occurred on fetch the git repositories.</string>
+    <string name="error_home_retry_content_description">Retry fetch git repositories.</string>
+    <string name="header_title">🌟 Github Repositories</string>
+    <string name="repository_image_content_provider">This is an image represents the repository %1$s and created by %2$s</string>
 </resources>

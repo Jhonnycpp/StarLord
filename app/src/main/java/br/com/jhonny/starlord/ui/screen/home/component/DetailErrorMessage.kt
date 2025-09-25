@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
@@ -45,10 +46,10 @@ public fun DetailErrorMessage(
                 painter = painterResource(
                     id = R.drawable.ic_android_error
                 ),
-                contentDescription = "Error loading image."
+                contentDescription = stringResource(R.string.error_image_content_description),
             )
             Text(
-                text = "An error occurred on fetch the git repositories.",
+                text = stringResource(R.string.error_detail_message),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
             )
@@ -60,10 +61,10 @@ public fun DetailErrorMessage(
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
-                    contentDescription = "Retry fetch git repositories."
+                    contentDescription = stringResource(R.string.error_detail_retry_content_description),
                 )
                 Text(
-                    text = "Retry",
+                    text = stringResource(R.string.error_retry_button),
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
@@ -76,10 +77,10 @@ public fun DetailErrorMessage(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back to home."
+                    contentDescription = stringResource(R.string.error_back_content_description),
                 )
                 Text(
-                    text = "Back",
+                    text = stringResource(R.string.error_back_button),
                     style = MaterialTheme.typography.titleMedium,
                 )
             }

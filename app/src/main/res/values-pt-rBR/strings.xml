@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StarLord</string>
+    <string name="repository_name_and_author">%1$s por %2$s</string>
+    <string name="repository_language_name">Linguagem: %1$s</string>
+    <string name="repository_license_name">Licença: %1$s</string>
+    <string name="repository_created_at">Criado em: %1$s</string>
+    <string name="repository_pushed_at">Último empurrão em: %1$s</string>
+    <string name="repository_updated_at">Última atualização em: %1$s</string>
+    <string name="back_button_content_description">Voltar</string>
+    <string name="error_image_content_description">Ocorreu um erro ao carregar a imagem.</string>
+    <string name="error_detail_message">Ocorreu um erro ao obter o dado do repositório git.</string>
+    <string name="error_detail_retry_content_description">Tentar novamenta obter o repositório git.</string>
+    <string name="error_retry_button">Retentar</string>
+    <string name="error_back_content_description">Voltar para o início.</string>
+    <string name="error_back_button">Voltar</string>
+    <string name="error_home_retry">Ocorreu um erro ao obter os dados dos reposiotórios git.</string>
+    <string name="error_home_retry_content_description">Tentar novamente obter os repositorios git</string>
+    <string name="header_title">🌟 Repositórios GitHub</string>
+    <string name="repository_image_content_provider">Está imagem é uma representação do repositório %1$s e criado por %2$s</string>
+</resources>

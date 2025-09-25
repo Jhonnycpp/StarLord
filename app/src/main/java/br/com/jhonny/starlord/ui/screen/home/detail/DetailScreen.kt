@@ -28,8 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.extension.toImageUiState
 import br.com.jhonny.starlord.ui.DevicePreview
 import br.com.jhonny.starlord.ui.screen.home.component.DetailErrorMessage
@@ -161,7 +163,7 @@ private fun DetailPortrait(
             }) {
                 Icon(
                     Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back_button_content_description),
                 )
             }
             Header(
@@ -179,7 +181,7 @@ private fun DetailPortrait(
         )
 
         Text(
-            text = "${repository.name} by ${repository.author}",
+            text = stringResource(R.string.repository_name_and_author, repository.name, repository.author),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(start = 8.dp),
@@ -216,12 +218,12 @@ private fun DetailPortrait(
         ) {
             if (!repository.language.isNullOrBlank()) {
                 Text(
-                    text = "Language: ${repository.language}"
+                    text = stringResource(R.string.repository_language_name, repository.language)
                 )
             }
             if (!repository.licenseName.isNullOrBlank()) {
                 Text(
-                    text = "License: ${repository.licenseName}"
+                    text = stringResource(R.string.repository_license_name, repository.licenseName)
                 )
             }
             Text(
@@ -231,13 +233,13 @@ private fun DetailPortrait(
             HorizontalDivider()
 
             Text(
-                text = "Created at: ${repository.createdAt}",
+                text = stringResource(R.string.repository_created_at, repository.createdAt),
             )
             Text(
-                text = "Last pushed at: ${repository.pushedAt}",
+                text = stringResource(R.string.repository_pushed_at, repository.pushedAt),
             )
             Text(
-                text = "Last updated at: ${repository.updatedAt}",
+                text = stringResource(R.string.repository_updated_at, repository.updatedAt),
             )
         }
     }
@@ -261,7 +263,7 @@ private fun DetailLandscape(
             }) {
                 Icon(
                     Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back_button_content_description),
                 )
             }
 
@@ -298,7 +300,7 @@ private fun DetailLandscape(
                 )
 
                 Text(
-                    text = "${repository.name} by ${repository.author}",
+                    text = stringResource(R.string.repository_name_and_author, repository.name, repository.author),
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -350,27 +352,27 @@ private fun DetailLandscape(
                         ) {
                             if (!repository.language.isNullOrBlank()) {
                                 Text(
-                                    text = "Language: ${repository.language}"
+                                    text = stringResource(R.string.repository_language_name, repository.language),
                                 )
                             }
                             if (!repository.licenseName.isNullOrBlank()) {
                                 Text(
-                                    text = "License: ${repository.licenseName}"
+                                    text = stringResource(R.string.repository_license_name, repository.licenseName),
                                 )
                             }
                         }
 
                         Text(
-                            text = "Created at: ${repository.createdAt}",
+                            text = stringResource(R.string.repository_created_at, repository.createdAt),
                             style = MaterialTheme.typography.bodySmall,
                         )
 
                         Text(
-                            text = "Last pushed at: ${repository.pushedAt}",
+                            text = stringResource(R.string.repository_pushed_at, repository.pushedAt),
                             style = MaterialTheme.typography.bodySmall,
                         )
                         Text(
-                            text = "Last updated at: ${repository.updatedAt}",
+                            text = stringResource(R.string.repository_updated_at, repository.updatedAt),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
