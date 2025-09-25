@@ -105,7 +105,7 @@ Este projeto utiliza um conjunto moderno de tecnologias para desenvolvimento And
     ./gradlew connectedAndroidTest # Executa os testes instrumentados
 ```  
 
-## 6. Coverage
+## 🌡️ 6. Coverage
 Este comando gera um relatório de cobertura de código unitário e instrumentado.
 ```bash
     ./gradlew :app:jacocoFullReport
@@ -113,7 +113,7 @@ Este comando gera um relatório de cobertura de código unitário e instrumentad
 
 Para visualizar basta abrir o relatorio em html na pasta `./app/build/reports/jacoco/jacocoFullReport/html/index.html` no seu navegador de preferencia.
 
-## 7. App
+## 📱 7. App
 O possui a funcionalidade de exibir os repositórios do github com mais estrelas ⭐
 
 |Retrato|Deitado|
