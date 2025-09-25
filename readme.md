@@ -118,10 +118,10 @@ O possui a funcionalidade de exibir os repositórios do github com mais estrelas
 
 |Retrato|Deitado|
 |-|-|
-|<video src="./doc/videos/repositories-scroll-portrait.mp4"/>|<video src="./doc/videos/repositories-scroll-landscape.mp4"/>|
+|![repositories-scroll-portrait.gif](doc/repositories-scroll-portrait.gif)|![repositories-scroll-landscape.gif](doc/repositories-scroll-landscape.gif)|
 
 E também possui a funcionalidade de exibir as informações do repositório selecionado.
 
 |Retrato|Deitado|
 |-|-|
-|<video src="./doc/videos/repository-detail-portrait.mp4"/>|<video src="./doc/videos/repository-detail-landscape.mp4"/>|
+|![repository-detail-portrait.gif](doc/repository-detail-portrait.gif)|![repository-detail-landscape.gif](doc/repository-detail-landscape.gif)|
