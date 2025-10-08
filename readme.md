@@ -57,7 +57,7 @@ StarLord/
 Este projeto utiliza um conjunto moderno de tecnologias para desenvolvimento Android:
 - Linguagem: Kotlin
 - Arquitetura: 
-  - Clean Architecture: Esta é uma arquitetura de software que visa separar as preocupações do seu código em camadas distintas (como Domínio, Casos de Uso, Interface Adapters e Frameworks & Drivers). O objetivo é criar um sistema mais testável, manutenível e independente de frameworks ou detalhes de implementação externos. No seu readme.md, ela está listada explicitamente.
+  - Clean Architecture: Esta é uma arquitetura de software que visa separar as preocupações do seu código em camadas distintas (como Domínio, Casos de Uso, Interface Adapters e Frameworks & Drivers). O objetivo é criar um sistema mais testável, manutenível e independente de frameworks ou detalhes de implementação externos.
   - MVVM: Esta é uma arquitetura de apresentação (parte da camada de "Interface Adapters" na Clean Architecture) que facilita a separação da lógica de apresentação da UI.
     - Model: Representa os dados e a lógica de negócios (geralmente vindo da camada de Domínio/Casos de Uso na Clean Architecture).
     - View: A UI (no seu caso, implementada com Jetpack Compose) que observa o ViewModel.
