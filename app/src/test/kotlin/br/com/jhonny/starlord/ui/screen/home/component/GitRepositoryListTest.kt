@@ -7,13 +7,16 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToIndex
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import java.util.Date
 
+@RunWith(AndroidJUnit4::class)
 class GitRepositoryListTest {
     @get:Rule
     val composeTestRule = createComposeRule()

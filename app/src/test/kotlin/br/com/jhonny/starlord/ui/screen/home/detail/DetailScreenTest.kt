@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
@@ -22,8 +23,10 @@ import kotlinx.coroutines.flow.update
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import java.util.Date
 
+@RunWith(AndroidJUnit4::class)
 class DetailScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()

@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToIndex
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiEvent
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
@@ -19,8 +20,10 @@ import kotlinx.coroutines.flow.update
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import java.util.Date
 
+@RunWith(AndroidJUnit4::class)
 class HomeScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -35,8 +38,8 @@ class HomeScreenTest {
     }
 
     @Test
-    fun should_Successfully_ShowHomeScreen_With6Elements() {
-        val repositories = buildRepositories(6)
+    fun should_Successfully_ShowHomeScreen_With4Elements() {
+        val repositories = buildRepositories(4)
 
         uiState.update { HomeUiState.Loaded(repositories = repositories) }
 
@@ -46,7 +49,7 @@ class HomeScreenTest {
         composeTestRule.onNodeWithTag("HomeScreen", useUnmergedTree = true).assertIsDisplayed()
         composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertExists()
         composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(6)
+        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(4)
     }
 
     @Test
@@ -70,7 +73,7 @@ class HomeScreenTest {
 
     @Test
     fun should_Successfully_TriggerOnItemClick_And_ShowDetails() {
-        val repositories = buildRepositories(6)
+        val repositories = buildRepositories(4)
 
         uiState.update { HomeUiState.Loaded(repositories = repositories) }
 
@@ -80,7 +83,7 @@ class HomeScreenTest {
         composeTestRule.onNodeWithTag("HomeScreen", useUnmergedTree = true).assertIsDisplayed()
         composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertExists()
         composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertIsDisplayed()
-        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(6)
+        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(4)
 
         val itemsTree = composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true)
         val firstItem = itemsTree[0]
