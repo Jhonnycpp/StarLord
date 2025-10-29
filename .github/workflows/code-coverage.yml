@@ -24,11 +24,22 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          api-levels: 36
+          target: default
+
+      - name: Check Android SDK path
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          ls $ANDROID_HOME/platforms || true
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
       - name: Run unit tests with coverage
-        run: ./gradlew koverHtmlReport koverXmlReport
+        run: ./gradlew koverXmlReport koverHtmlReport
 
       - name: Add coverage report to PR
         uses: mi-kas/kover-report@v1.9
@@ -38,6 +49,7 @@ jobs:
           title: "📊 Code coverage report"
           update-comment: true
           min-coverage-overall: 40
+          coverage-counter-type: LINE
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v4
