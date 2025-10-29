@@ -81,7 +81,7 @@ Este projeto utiliza um conjunto moderno de tecnologias para desenvolvimento And
   - Instrumentados: JUnit 4, Compose UI Test, Navigation Testing.
 - Utilitários AndroidX/Jetpack: Core KTX, Lifecycle KTX.
 - Build System: Gradle com Kotlin DSL.
-- Cobertura de Código: JaCoCo.
+- Cobertura de Código: Kover.
 
 ## 4. 🧰 Compile o projeto:
 ```bash
@@ -108,10 +108,10 @@ Este projeto utiliza um conjunto moderno de tecnologias para desenvolvimento And
 ## 🌡️ 6. Coverage
 Este comando gera um relatório de cobertura de código unitário e instrumentado.
 ```bash
-    ./gradlew :app:jacocoFullReport
+    ./gradlew :app:koverHtmlReport
 ```
 
-Para visualizar basta abrir o relatorio em html na pasta `./app/build/reports/jacoco/jacocoFullReport/html/index.html` no seu navegador de preferencia.
+Para visualizar basta abrir o relatorio em html na pasta `./app/build/reports/kover/html/index.html` no seu navegador de preferencia.
 
 ## 📱 7. App
 O possui a funcionalidade de exibir os repositórios do github com mais estrelas ⭐

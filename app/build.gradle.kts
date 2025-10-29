@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.jacoco)
+    alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
 }
 
@@ -24,13 +24,9 @@ android {
     }
 
     buildTypes {
-        debug {
-            enableAndroidTestCoverage = true
-            enableUnitTestCoverage = true
-        }
-
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -40,13 +36,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
+            jvmTarget = JvmTarget.JVM_21
         }
 
         explicitApi()
@@ -61,6 +57,7 @@ android {
 
         unitTests {
             isReturnDefaultValues = true
+            isIncludeAndroidResources = true
         }
 
         unitTests.all {
@@ -111,6 +108,11 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.mockk.android)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(kotlin("test"))
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.compose.ui.test.junit4)
+    testImplementation(libs.androidx.navigation.testing)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -123,57 +125,29 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
-val jacocoExcludes = listOf(
-    "**/R.class",
-    "**/R$*.class",
-    "**/BuildConfig.*",
-    "**/Manifest*.*",
-    "**/MainApplication.class",
-    "**/di/MainModuleKt.class",
-    "**/NavHostControllerKt.*",
-    "**/dto/**",
-    "**/vo/**",
-    "**/state/**",
-    "**/ui/**/provider/**",
-    "**/ui/theme/**"
-)
-
-tasks.register<JacocoReport>("jacocoFullReport") {
-    group = "verification"
-    description = "Generates merged coverage report for unit and android tests"
-
-    dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
-
-    executionData.setFrom(
-        files(
-            fileTree(layout.buildDirectory.dir("jacoco")) {
-                include("**/*.exec")
-            },
-            fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage")) {
-                include("**/*.exec")
-            },
-            fileTree(layout.buildDirectory.dir("outputs/code_coverage/debugAndroidTest/connected")) {
-                include("**/*.ec")
-            }
-        )
-    )
-
-    val javaClasses = layout.buildDirectory.dir("intermediates/javac/debug/classes").map {
-        fileTree(it) {
-            exclude(jacocoExcludes)
-        }
-    }
-    val kotlinClasses = layout.buildDirectory.dir("tmp/kotlin-classes/debug").map {
-        fileTree(it) {
-            exclude(jacocoExcludes)
-        }
-    }
-
-    classDirectories.setFrom(files(javaClasses, kotlinClasses))
-    sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
-
+kover {
     reports {
-        xml.required.set(true)
-        html.required.set(true)
+        filters {
+            excludes {
+                packages(
+                    "*.ui.theme",
+                    "*.di",
+                    "*.ui.preview",
+                    "*.state",
+                    "*.vo",
+                    "*.dto",
+                )
+                classes(
+                    "*.Generated*",
+                    "*.BuildConfig*",
+                    "*ComposableSingletons*",
+
+                    "*.MainActivity",
+                    "*.MainApplication",
+                    "*PreviewProvider*",
+                    "*.NavHostControllerExtKt",
+                )
+            }
+        }
     }
 }
