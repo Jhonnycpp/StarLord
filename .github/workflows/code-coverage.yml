@@ -31,7 +31,7 @@ jobs:
         run: ./gradlew koverHtmlReport koverXmlReport
 
       - name: Add coverage report to PR
-        uses: kotlin/kover-report@1
+        uses: mi-kas/kover-report@v1.9
         with:
           paths: ${{ github.workspace }}/app/build/reports/kover/xml/report.xml
           token: ${{ secrets.GITHUB_TOKEN }}
