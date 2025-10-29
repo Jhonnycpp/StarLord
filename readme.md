@@ -13,7 +13,7 @@ Para começar a trabalhar com o projeto StarLord, siga os passos abaixo:
 
 - Git
 - Android Studio Narwhal 3 Feature Drop | 2025.1.3 ou superior
-- JDK 17 ou superior (opcional, pois o Android Studio possui a jdk integrada)
+- JDK 21 ou superior (opcional, pois o Android Studio possui a jdk integrada)
 - [Gradle +8.](https://gradle.org/install/) (opcional, pois o projeto inclui o wrapper)
 
 ### 📦 Instalação
