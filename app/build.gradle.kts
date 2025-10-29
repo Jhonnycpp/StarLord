@@ -61,6 +61,7 @@ android {
 
         unitTests {
             isReturnDefaultValues = true
+            isIncludeAndroidResources = true
         }
 
         unitTests.all {
@@ -111,6 +112,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.mockk.android)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(kotlin("test"))
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
