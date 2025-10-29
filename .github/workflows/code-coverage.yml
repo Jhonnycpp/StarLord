@@ -39,7 +39,15 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run unit tests with coverage
-        run: ./gradlew koverXmlReport koverHtmlReport
+        run: ./gradlew koverXmlReport koverHtmlReport --stacktrace
+
+      - name: Upload test report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report
+          path: app/build/reports/tests/testDebugUnitTest
+          retention-days: 7
 
       - name: Add coverage report to PR
         uses: mi-kas/kover-report@v1.9
