@@ -112,6 +112,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.androidx.compose.ui.test.junit4)
+    testImplementation(libs.androidx.navigation.testing)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -145,7 +146,6 @@ kover {
                     "*.MainApplication",
                     "*PreviewProvider*",
                     "*.NavHostControllerExtKt",
-                    "*.AppContentKt",
                 )
             }
         }

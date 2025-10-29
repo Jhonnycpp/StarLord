@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.jhonny.starlord.ui.AppContent
 import br.com.jhonny.starlord.ui.navigation.Navigation
 import br.com.jhonny.starlord.ui.navigation.NavigationCommand
@@ -18,11 +19,13 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class AppContentTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
@@ -56,7 +59,7 @@ class AppContentTest {
 
         composeTestRule.waitForIdle()
 
-        assertEquals(Route.Home::class.qualifiedName, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(Route.Home::class.qualifiedName, navController.currentBackStackEntry?.destination?.route)
 
         verify { navigation.moveToIdle() }
     }
@@ -71,7 +74,7 @@ class AppContentTest {
 
         composeTestRule.waitForIdle()
 
-        assertEquals(expectedRoute, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(expectedRoute, navController.currentBackStackEntry?.destination?.route)
 
         verify { navigation.moveToIdle() }
     }
@@ -86,13 +89,13 @@ class AppContentTest {
 
         composeTestRule.waitForIdle()
 
-        assertEquals(expectedRoute, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(expectedRoute, navController.currentBackStackEntry?.destination?.route)
 
         state.update { NavigationCommand.Back }
 
         composeTestRule.waitForIdle()
 
-        assertEquals(Route.Home::class.qualifiedName, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(Route.Home::class.qualifiedName, navController.currentBackStackEntry?.destination?.route)
 
         verify { navigation.moveToIdle() }
     }
@@ -109,7 +112,7 @@ class AppContentTest {
 
         composeTestRule.waitForIdle()
 
-        assertEquals(Route.Home::class.qualifiedName, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(Route.Home::class.qualifiedName, navController.currentBackStackEntry?.destination?.route)
 
         verify { navigation.moveToIdle() }
     }
@@ -123,7 +126,7 @@ class AppContentTest {
 
         composeTestRule.waitForIdle()
 
-        assertEquals(expectedRoute, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(expectedRoute, navController.currentBackStackEntry?.destination?.route)
 
         val activity = composeTestRule.activity
 
