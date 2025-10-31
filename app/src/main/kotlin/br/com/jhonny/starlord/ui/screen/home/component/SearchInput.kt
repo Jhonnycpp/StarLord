@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.extension.Empty
 import br.com.jhonny.starlord.ui.preview.ComponentPreview
@@ -44,7 +45,8 @@ public fun SearchInput(
     Column(
         modifier = modifier
             .padding(all = 8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag("SearchInput"),
     ) {
         Text(
             text = "Repositories with what languages?",
@@ -88,13 +90,15 @@ private fun LanguageSelectionList(
     LazyRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .testTag("LanguageSelectionList"),
     ) {
         items(languages) { language ->
             Card(
                 Modifier
                     .padding(all = 8.dp)
-                    .clickable { onLanguageToggled(language) },
+                    .clickable { onLanguageToggled(language) }
+                    .testTag("LanguageItem_$language"),
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Center,
@@ -111,7 +115,8 @@ private fun LanguageSelectionList(
                             contentDescription = null,
                             modifier = Modifier
                                 .size(18.dp)
-                                .padding(end = 4.dp),
+                                .padding(end = 4.dp)
+                                .testTag("LanguageSelectedIcon_$language"),
                         )
                     }
                     Text(
@@ -130,7 +135,9 @@ private fun SelectedLanguagesHeader(
     onClearClick: () -> Unit,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .testTag("SelectedLanguagesHeader"),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -139,7 +146,10 @@ private fun SelectedLanguagesHeader(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        IconButton(onClick = onClearClick) {
+        IconButton(
+            onClick = onClearClick,
+            modifier = Modifier.testTag("ClearSelectedLanguagesButton")
+        ) {
             Icon(
                 Icons.Default.Clear,
                 contentDescription = "Clear all selected languages",
@@ -156,13 +166,16 @@ private fun SelectedLanguagesBadges(
 ) {
     FlowRow(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag("SelectedLanguagesBadges"),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         selectedLanguages.forEach { language ->
             Badge(
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier
+                    .padding(4.dp)
+                    .testTag("LanguageBadge_$language")
             ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -178,7 +191,9 @@ private fun SelectedLanguagesBadges(
                     Icon(
                         Icons.Default.Clear,
                         contentDescription = "Remove $language",
-                        modifier = Modifier.clickable { onLanguageRemoved(language) }
+                        modifier = Modifier
+                            .clickable { onLanguageRemoved(language) }
+                            .testTag("RemoveLanguage_$language")
                     )
                 }
             }
@@ -211,7 +226,10 @@ private fun RepositorySearchField(
         },
         trailingIcon = {
             AnimatedVisibility(visible = value.isNotEmpty()) {
-                IconButton(onClick = onClearClick) {
+                IconButton(
+                    onClick = onClearClick,
+                    modifier = Modifier.testTag("ClearSearchFieldButton")
+                ) {
                     Icon(
                         Icons.Default.Clear,
                         contentDescription = "Clear search term",
@@ -222,7 +240,8 @@ private fun RepositorySearchField(
         singleLine = true,
         modifier = modifier
             .padding(vertical = 8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag("RepositorySearchField"),
     )
 }
 
