@@ -27,7 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.extension.Empty
 import br.com.jhonny.starlord.ui.preview.ComponentPreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
@@ -49,7 +51,7 @@ public fun SearchInput(
             .testTag("SearchInput"),
     ) {
         Text(
-            text = "Repositories with what languages?",
+            text = stringResource(R.string.search_input_language_header),
             style = MaterialTheme.typography.titleMedium,
         )
 
@@ -142,7 +144,7 @@ private fun SelectedLanguagesHeader(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Selected languages",
+            text = stringResource(R.string.search_input_header_selected_languages),
             style = MaterialTheme.typography.titleMedium,
         )
 
@@ -152,7 +154,7 @@ private fun SelectedLanguagesHeader(
         ) {
             Icon(
                 Icons.Default.Clear,
-                contentDescription = "Clear all selected languages",
+                contentDescription = stringResource(R.string.search_input_clear_all_selected_languages),
             )
         }
     }
@@ -190,7 +192,7 @@ private fun SelectedLanguagesBadges(
 
                     Icon(
                         Icons.Default.Clear,
-                        contentDescription = "Remove $language",
+                        contentDescription = stringResource(R.string.search_input_clear_selected_language, language),
                         modifier = Modifier
                             .clickable { onLanguageRemoved(language) }
                             .testTag("RemoveLanguage_$language")
@@ -218,11 +220,11 @@ private fun RepositorySearchField(
                     contentDescription = null,
                     modifier = Modifier.padding(end = 8.dp)
                 )
-                Text("Find a repository")
+                Text(stringResource(R.string.search_input_field_header))
             }
         },
         placeholder = {
-            Text("Query data by name, readme or description.")
+            Text(stringResource(R.string.search_input_placeholder))
         },
         trailingIcon = {
             AnimatedVisibility(visible = value.isNotEmpty()) {
@@ -232,7 +234,7 @@ private fun RepositorySearchField(
                 ) {
                     Icon(
                         Icons.Default.Clear,
-                        contentDescription = "Clear search term",
+                        contentDescription = stringResource(R.string.search_input_clear_field),
                     )
                 }
             }
@@ -252,7 +254,7 @@ private fun SearchInputPreview() {
     PreviewContentRender { modifier ->
         SearchInput(
             modifier = modifier,
-            searchTerm = "kotlin",
+            searchTerm = String.Empty,
             selectedLanguages = listOf("kotlin", "java"),
             onSearchTermChanged = {},
             onLanguageToggled = {},
