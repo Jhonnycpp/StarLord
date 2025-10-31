@@ -50,6 +50,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     testOptions {
@@ -96,6 +97,7 @@ dependencies {
     implementation(libs.img.coil.compose)
     implementation(libs.img.coil.network.okhttp)
 
+    implementation(libs.http.client.logging.interceptor)
     implementation(libs.http.retrofit)
     implementation(libs.http.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)

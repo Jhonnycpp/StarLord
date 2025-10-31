@@ -33,5 +33,8 @@ public sealed interface HomeUiState {
      * Represents the error state of the home screen.
      * This state is used when an error occurs while fetching data.
      */
-    public data object Error : HomeUiState
+    public data class Error(
+        val searchTerm: String,
+        val languages: List<String>,
+    ) : HomeUiState
 }

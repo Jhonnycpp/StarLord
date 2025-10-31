@@ -1,26 +1,44 @@
 package br.com.jhonny.starlord.feature.home.datasource
 
-import android.util.Log
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
-import br.com.jhonny.starlord.feature.home.exception.CacheValueMissingException
-import java.util.concurrent.ConcurrentHashMap
+import br.com.jhonny.starlord.feature.home.entity.CacheKey
 
-internal class LocalGitHubDatasource(
-    private val cache: ConcurrentHashMap<Int, GitHubRepositoryResponse> = ConcurrentHashMap(),
-) : WriteGitHubDataSource {
-    override suspend fun getRepositories(
+/**
+ * Interface responsible for defining write operations related to GitHub data.
+ * It extends [RemoteGitHubDatasource] to also include read operations.
+ */
+internal interface LocalGitHubDatasource {
+    suspend fun getRepositories(
+        query: String,
+        languages: List<String>,
+    ): List<GitHubRepositoryResponse>
+
+    /**
+     * Saves a [GitHubRepositoryResponse] to the local data source for a given page.
+     *
+     * @param page The page number to save the repositories for.
+     * @param repositories The [GitHubRepositoryResponse] to save.
+     */
+    suspend fun save(
         page: Int,
-    ): GitHubRepositoryResponse? = runCatching {
-        cache[page] ?: throw CacheValueMissingException()
-    }.onFailure {
-        Log.d("LocalGitHubDatasource", "Fail retrieve the value from cache to page [$page].", it)
-    }.getOrNull()
+        query: String,
+        languages: List<String>,
+        repositories: GitHubRepositoryResponse
+    )
 
-    override suspend fun save(page: Int, repositories: GitHubRepositoryResponse) {
-        runCatching {
-            cache[page] = repositories
-        }.onFailure {
-            Log.d("LocalGitHubDatasource", "Fail save the value to cache to page [$page].", it)
-        }
-    }
+    /**
+     * Retrieves the current page number for a given query and set of languages.
+     *
+     * @param query The search query used to find repositories.
+     * @param languages The list of programming languages to filter the repositories by.
+     * @return The current page number as an [Int].
+     */
+    suspend fun getCurrentPage(
+        query: String,
+        languages: List<String>,
+    ): Int?
+
+    suspend fun contains(
+        block: CacheKey.() -> Boolean,
+    ): Boolean
 }

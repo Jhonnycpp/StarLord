@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,10 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
-import br.com.jhonny.starlord.ui.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.detail.OnDetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
-import br.com.jhonny.starlord.ui.theme.StarLordTheme
 
 @Composable
 public fun DetailErrorMessage(
@@ -91,13 +90,9 @@ public fun DetailErrorMessage(
 @ComponentPreview
 @Composable
 private fun ErrorMessagePreview() {
-    StarLordTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            DetailErrorMessage(
-                modifier = Modifier.padding(
-                    paddingValues = innerPadding
-                ),
-            )
-        }
+    PreviewContentRender { modifier ->
+        DetailErrorMessage(
+            modifier = modifier,
+        )
     }
 }

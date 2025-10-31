@@ -16,8 +16,9 @@ public interface GitHubRepositoryService {
      * @param page The page number of the results to retrieve.
      * @return A [Response] object containing a [GitHubRepositoryResponse] if successful, or an error otherwise.
      */
-    @GET("search/repositories?q=language:kotlin")
+    @GET("search/repositories")
     public suspend fun getRepositories(
+        @Query("q") query: String,
         @Query("sort") sort: String,
         @Query("page") page: Int,
     ): Response<GitHubRepositoryResponse>

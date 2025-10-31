@@ -2,13 +2,11 @@ package br.com.jhonny.starlord.ui.screen.home.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
@@ -17,10 +15,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import br.com.jhonny.starlord.ui.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.provider.RepositoryPreviewProvider
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
-import br.com.jhonny.starlord.ui.theme.StarLordTheme
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
@@ -68,10 +66,9 @@ internal fun GitRepositoryList(
                 }
             }
         },
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         modifier = modifier
+            .padding(8.dp)
             .testTag("GitRepositoryList")
-            .padding(top = 16.dp)
     )
 }
 
@@ -80,14 +77,10 @@ internal fun GitRepositoryList(
 private fun GitRepositoryListPreview(
     @PreviewParameter(RepositoryPreviewProvider::class) repositories: List<RepositoryVO>,
 ) {
-    StarLordTheme {
-        Scaffold { innerPadding ->
-            GitRepositoryList(
-                modifier = Modifier.padding(
-                    paddingValues = innerPadding
-                ),
-                repositories = repositories,
-            )
-        }
+    PreviewContentRender { modifier ->
+        GitRepositoryList(
+            modifier = modifier,
+            repositories = repositories,
+        )
     }
 }

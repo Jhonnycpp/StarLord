@@ -17,7 +17,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,7 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.extension.toImageUiState
-import br.com.jhonny.starlord.ui.DevicePreview
+import br.com.jhonny.starlord.ui.preview.DevicePreview
+import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.component.DetailErrorMessage
 import br.com.jhonny.starlord.ui.screen.home.component.Header
 import br.com.jhonny.starlord.ui.screen.home.component.ProgressMessage
@@ -41,7 +41,6 @@ import br.com.jhonny.starlord.ui.screen.home.component.RepositoryImage
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
-import br.com.jhonny.starlord.ui.theme.StarLordTheme
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -138,7 +137,7 @@ private fun DetailPortrait(
     onUiEvent: OnDetailUiEvent = {},
 ) {
     Column(
-        horizontalAlignment = Alignment.Companion.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp),
@@ -401,29 +400,25 @@ private fun DetailLandscape(
 @DevicePreview
 @Composable
 private fun DetailScreenPreview() {
-    StarLordTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            DetailContent(
-                modifier = Modifier.padding(
-                    paddingValues = innerPadding
-                ),
-                repository = RepositoryVO(
-                    id = 1,
-                    name = "Lumos",
-                    author = "Jhonatan",
-                    starCount = 124,
-                    forkCount = 37,
-                    userAvatar = "https://picsum.photos/200?random=1",
-                    description = "The Magic Mask for Android",
-                    language = "Kotlin",
-                    licenseName = "GNU General Public License v3.0",
-                    createdAt = Date(),
-                    updatedAt = Date(),
-                    pushedAt = Date(),
-                    watcherCount = 33,
-                    issueCount = 2,
-                ),
-            )
-        }
+    PreviewContentRender { modifier ->
+        DetailContent(
+            modifier = modifier,
+            repository = RepositoryVO(
+                id = 1,
+                name = "Lumos",
+                author = "Jhonatan",
+                starCount = 124,
+                forkCount = 37,
+                userAvatar = "https://picsum.photos/200?random=1",
+                description = "The Magic Mask for Android",
+                language = "Kotlin",
+                licenseName = "GNU General Public License v3.0",
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date(),
+                watcherCount = 33,
+                issueCount = 2,
+            ),
+        )
     }
 }

@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,15 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
-import br.com.jhonny.starlord.ui.ComponentPreview
-import br.com.jhonny.starlord.ui.screen.home.list.OnHomeUiEvent
-import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiEvent
-import br.com.jhonny.starlord.ui.theme.StarLordTheme
+import br.com.jhonny.starlord.ui.preview.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 
 @Composable
 public fun ErrorMessage(
     modifier: Modifier = Modifier,
-    onUiEvent: OnHomeUiEvent = {},
+    onRetry: () -> Unit = {},
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,9 +51,7 @@ public fun ErrorMessage(
                 textAlign = TextAlign.Center,
             )
             Button(
-                onClick = {
-                    onUiEvent(HomeUiEvent.RequestMoreData)
-                },
+                onClick = onRetry,
                 modifier = Modifier
                     .testTag("RetryButton")
                     .padding(top = 32.dp)
@@ -77,15 +72,11 @@ public fun ErrorMessage(
 @ComponentPreview
 @Composable
 private fun ErrorMessagePreview() {
-    StarLordTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            ErrorMessage(
-                modifier = Modifier.padding(
-                    paddingValues = innerPadding
-                ),
-            ) {
+    PreviewContentRender { modifier ->
+        ErrorMessage(
+            modifier = modifier,
+        ) {
 
-            }
         }
     }
 }

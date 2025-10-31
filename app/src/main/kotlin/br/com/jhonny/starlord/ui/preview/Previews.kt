@@ -1,4 +1,4 @@
-package br.com.jhonny.starlord.ui
+package br.com.jhonny.starlord.ui.preview
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

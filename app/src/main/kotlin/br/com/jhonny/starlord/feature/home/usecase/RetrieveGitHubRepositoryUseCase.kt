@@ -9,9 +9,15 @@ public class RetrieveGitHubRepositoryUseCase(
     private val repository: GitHubRepository,
 ) {
 
-    public suspend operator fun invoke(): List<RepositoryVO> = repository.getRepositories().toRepositoriesVO()
+    public suspend operator fun invoke(
+        query: String,
+        languages: List<String>
+    ): List<RepositoryVO> = repository.getRepositories(
+        searchTerm = query.trim().lowercase(),
+        languages = languages.map { it.trim().lowercase() }.sorted(),
+    ).toRepositoriesVO()
 
-    private fun List<GitHubRepositoryDTO>.toRepositoriesVO() = map {
+    private fun List<GitHubRepositoryDTO>.toRepositoriesVO(): List<RepositoryVO> = map {
         RepositoryVO(
             id = it.id,
             name = it.name,
