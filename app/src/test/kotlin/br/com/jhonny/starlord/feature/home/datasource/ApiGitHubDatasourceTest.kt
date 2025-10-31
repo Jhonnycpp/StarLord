@@ -15,23 +15,24 @@ import org.junit.Rule
 import org.junit.Test
 import retrofit2.Response
 
-class RemoteGitHubDatasourceTest {
+class ApiGitHubDatasourceTest {
     @get:Rule
     private val scope = TestCoroutineScopeRule()
     private val gitHubRepositoryService = mockk<GitHubRepositoryService>()
-    private val datasource = RemoteGitHubDatasource(gitHubRepositoryService)
+    private val datasource = ApiGitHubDatasource(gitHubRepositoryService)
 
     @Test
     fun `should successfully retrieve repositories`() = runTest {
         val response = Response.success(expectedResponse)
         coEvery {
             gitHubRepositoryService.getRepositories(
+                query = any(),
                 sort = any(),
                 page = any(),
             )
         } returns response
 
-        val result = datasource.getRepositories(1)
+        val result = datasource.getRepositories(1, "query", listOf("language"))
 
         assertEquals(expectedResponse, result)
     }
@@ -40,12 +41,13 @@ class RemoteGitHubDatasourceTest {
     fun `should fail retrieve repositories with error body`() = runTest {
         coEvery {
             gitHubRepositoryService.getRepositories(
+                query = any(),
                 sort = any(),
                 page = any(),
             )
         } returns Response.success(null)
 
-        val result = datasource.getRepositories(1)
+        val result = datasource.getRepositories(1, "query", listOf("language"))
 
         assertNull(result)
     }
@@ -54,12 +56,13 @@ class RemoteGitHubDatasourceTest {
     fun `should fail retrieve repositories with a backend error`() = runTest {
         coEvery {
             gitHubRepositoryService.getRepositories(
+                query = any(),
                 sort = any(),
                 page = any(),
             )
         } returns Response.error(503, mockk(relaxed = true))
 
-        val result = datasource.getRepositories(1)
+        val result = datasource.getRepositories(1, "query", listOf("language"))
 
         assertNull(result)
     }

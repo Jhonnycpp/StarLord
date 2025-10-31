@@ -10,10 +10,10 @@ public class RetrieveGitHubRepositoryUseCase(
 ) {
 
     public suspend operator fun invoke(
-        query: String,
+        searchTerm: String,
         languages: List<String>
     ): List<RepositoryVO> = repository.getRepositories(
-        searchTerm = query.trim().lowercase(),
+        searchTerm = searchTerm.trim().lowercase(),
         languages = languages.map { it.trim().lowercase() }.sorted(),
     ).toRepositoriesVO()
 

@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToIndex
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import br.com.jhonny.starlord.extension.Empty
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiEvent
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
@@ -68,7 +69,7 @@ class HomeScreenTest {
 
         composeTestRule.waitForIdle()
 
-        verify { viewModel.onUiEvent(HomeUiEvent.RequestMoreData) }
+        verify { viewModel.onUiEvent(HomeUiEvent.RequestMoreData(String.Empty, emptyList())) }
     }
 
     @Test
@@ -103,7 +104,7 @@ class HomeScreenTest {
         composeTestRule.onNodeWithTag("HomeScreenLoading", useUnmergedTree = true).assertExists()
         composeTestRule.onNodeWithTag("HomeScreenLoading", useUnmergedTree = true).assertIsDisplayed()
 
-        verify(exactly = 1) { viewModel.onUiEvent(HomeUiEvent.RequestMoreData) }
+        verify(exactly = 1) { viewModel.onUiEvent(HomeUiEvent.RequestMoreData(String.Empty, emptyList())) }
     }
 
     @Test
@@ -113,12 +114,12 @@ class HomeScreenTest {
         composeTestRule.onNodeWithTag("HomeScreenLoading", useUnmergedTree = true).assertExists()
         composeTestRule.onNodeWithTag("HomeScreenLoading", useUnmergedTree = true).assertIsDisplayed()
 
-        verify(exactly = 1) { viewModel.onUiEvent(HomeUiEvent.RequestMoreData) }
+        verify(exactly = 1) { viewModel.onUiEvent(HomeUiEvent.RequestMoreData(String.Empty, emptyList())) }
     }
 
     @Test
     fun should_Successfully_ShowErrorMessage_OnErrorState() {
-        uiState.update { HomeUiState.Error }
+        uiState.update { HomeUiState.Error("query", listOf("language")) }
 
         setScreenContent()
 

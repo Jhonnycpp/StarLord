@@ -1,6 +1,7 @@
 package br.com.jhonny.starlord.feature.home.datasource
 
 import android.util.Log
+import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
 import br.com.jhonny.starlord.feature.home.entity.CacheKey
 import java.util.concurrent.ConcurrentHashMap
@@ -16,6 +17,8 @@ internal class CacheGitHubDatasource(
     }.onFailure {
         Log.d("LocalGitHubDatasource", "Fail retrieve the value from cache [query: $query][languages: $languages].", it)
     }.getOrDefault(emptyList())
+
+    override suspend fun getRepository(id: Int): GitHubRepositoryDTO? = cache.values.flatMap { it.items }.firstOrNull { it.id == id }
 
     override suspend fun save(
         page: Int,

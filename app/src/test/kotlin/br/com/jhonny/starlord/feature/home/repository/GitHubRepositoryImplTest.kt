@@ -1,105 +1,109 @@
 package br.com.jhonny.starlord.feature.home.repository
 
-import br.com.jhonny.starlord.feature.home.datasource.ReadGitHubDatasource
-import br.com.jhonny.starlord.feature.home.datasource.WriteGitHubDataSource
+import br.com.jhonny.starlord.feature.home.datasource.LocalGitHubDatasource
+import br.com.jhonny.starlord.feature.home.datasource.RemoteGitHubDatasource
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
 import br.com.jhonny.starlord.feature.home.dto.LicenseDTO
 import br.com.jhonny.starlord.feature.home.dto.RepositoryOwnerDTO
 import br.com.jhonny.starlord.rule.TestCoroutineScopeRule
 import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.coJustRun
+import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 internal class GitHubRepositoryImplTest {
     @get:Rule
     private val scope = TestCoroutineScopeRule()
-    private val localDatasource = mockk<WriteGitHubDataSource>(relaxed = true)
-    private val remoteDatasource = mockk<ReadGitHubDatasource>()
-    private val pageManager = mockk<PageDatasource>(relaxed = true)
+    private val localDatasource = mockk<LocalGitHubDatasource>()
+    private val remoteDatasource = mockk<RemoteGitHubDatasource>()
     private val repository = GitHubRepositoryImpl(
         localDatasource = localDatasource,
         remoteDatasource = remoteDatasource,
-        pageManager = pageManager,
     )
-
-    @Before
-    fun setUp() {
-        every { pageManager.page } returns 1
-    }
 
     @Test
     fun `should successfully retrieve repositories from local datasource`() = runTest {
-        coEvery { localDatasource.getRepositories(any()) } returns expectedResponse
+        coEvery { localDatasource.contains(any()) } returns true
+        coEvery { localDatasource.getCurrentPage(any(), any()) } returns 1
+        coEvery { localDatasource.getRepositories(any(), any()) } returns listOf(expectedResponse)
 
-        val result = repository.getRepositories()
+        val result = repository.getRepositories("query", listOf("language"))
 
         assertEquals(expectedResponse.items, result)
+        coVerify(exactly = 1) { localDatasource.getRepositories("query", listOf("language")) }
+        coVerify(exactly = 0) { remoteDatasource.getRepositories(any(), any(), any()) }
     }
 
     @Test
     fun `should successfully retrieve repositories from remote datasource`() = runTest {
-        coEvery { localDatasource.getRepositories(any()) } returns null
-        coEvery { remoteDatasource.getRepositories(any()) } returns expectedResponse
+        coEvery { localDatasource.contains(any()) } returns false
+        coEvery { localDatasource.getCurrentPage(any(), any()) } returns 1
+        coEvery { localDatasource.getRepositories(any(), any()) } returns emptyList()
+        coJustRun { localDatasource.save(any(), any(), any(), any()) }
+        coEvery { remoteDatasource.getRepositories(any(), any(), any()) } returns expectedResponse
 
-        val result = repository.getRepositories()
+        val result = repository.getRepositories("query", listOf("language"))
 
         assertEquals(expectedResponse.items, result)
+        coVerify(exactly = 1) { remoteDatasource.getRepositories(2, "query", listOf("language")) }
+        coVerify(exactly = 1) { localDatasource.save(2, "query", listOf("language"), expectedResponse) }
     }
 
     @Test
     fun `should successfully retrieve repositories with multiple pages`() = runTest {
-        every { pageManager.page } returns 2
-        coEvery { localDatasource.getRepositories(any()) } returns expectedResponse
-        coEvery { remoteDatasource.getRepositories(any()) } returns expectedResponse
+        coEvery { localDatasource.contains(any()) } returns false
+        coEvery { localDatasource.getCurrentPage(any(), any()) } returns 1
+        coEvery { localDatasource.getRepositories(any(), any()) } returns listOf(expectedResponse)
+        coJustRun { localDatasource.save(any(), any(), any(), any()) }
+        coEvery { remoteDatasource.getRepositories(any(), any(), any()) } returns expectedResponse
 
-        val result = repository.getRepositories()
+        val result = repository.getRepositories("query", listOf("language"))
 
         assertTrue(result.size == 2)
+        coVerify(exactly = 1) { localDatasource.getRepositories("query", listOf("language")) }
+        coVerify(exactly = 1) { remoteDatasource.getRepositories(2, "query", listOf("language")) }
+        coVerify(exactly = 1) { localDatasource.save(2, "query", listOf("language"), expectedResponse) }
     }
 
     @Test
     fun `should fail retrieve repositories`() = runTest {
-        coEvery { localDatasource.getRepositories(any()) } returns null
-        coEvery { remoteDatasource.getRepositories(any()) } returns null
+        coEvery { localDatasource.getCurrentPage(any(), any()) } returns null
+        coEvery { localDatasource.getRepositories(any(), any()) } returns emptyList()
+        coEvery { localDatasource.contains(any()) } returns false
+        coEvery { remoteDatasource.getRepositories(any(), any(), any()) } returns null
 
-        val result = repository.getRepositories()
+        val result = repository.getRepositories("query", listOf("language"))
 
         assertTrue(result.isEmpty())
+        coVerify(exactly = 1) { remoteDatasource.getRepositories(1, "query", listOf("language")) }
+        coVerify(exactly = 0) { localDatasource.save(any(), any(), any(), any()) }
     }
 
     @Test
     fun `should successfully retrieve repository`() = runTest {
-        coEvery { localDatasource.getRepositories(any()) } returns expectedResponse
+        coEvery { localDatasource.getRepository(any()) } returns repositoryDTO
 
         val result = repository.getRepository(1)
 
         assertEquals(repositoryDTO, result)
-    }
-
-    @Test
-    fun `should fail retrieve repository with missing data on local datasource`() = runTest {
-        coEvery { localDatasource.getRepositories(any()) } returns expectedResponse
-
-        val result = repository.getRepository(2)
-
-        assertNull(result)
+        coVerify(exactly = 1) { localDatasource.getRepository(id = 1) }
     }
 
     @Test
     fun `should fail retrieve repository with empty local datasource`() = runTest {
-        coEvery { localDatasource.getRepositories(any()) } returns null
+        coEvery { localDatasource.getRepository(any()) } returns null
 
         val result = repository.getRepository(1)
 
         assertNull(result)
+        coVerify(exactly = 1) { localDatasource.getRepository(id = 1) }
     }
 
     private companion object {

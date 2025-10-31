@@ -41,18 +41,7 @@ internal class GitHubRepositoryImpl(
         }
     }
 
-    override suspend fun getRepository(id: Int): GitHubRepositoryDTO? {
-//        for (page in 1..pageManager.page) {
-//            val items = localDatasource.getRepositories(page)?.items
-//            val repository = items?.find {
-//                it.id == id
-//            }
-//
-//            if (repository != null) return repository
-//        }
-
-        return null
-    }
+    override suspend fun getRepository(id: Int): GitHubRepositoryDTO? = localDatasource.getRepository(id)
 
     private suspend fun retrieveFromRemote(
         page: Int,

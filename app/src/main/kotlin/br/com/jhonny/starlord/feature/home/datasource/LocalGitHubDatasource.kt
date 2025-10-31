@@ -1,5 +1,6 @@
 package br.com.jhonny.starlord.feature.home.datasource
 
+import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
 import br.com.jhonny.starlord.feature.home.entity.CacheKey
 
@@ -12,6 +13,8 @@ internal interface LocalGitHubDatasource {
         query: String,
         languages: List<String>,
     ): List<GitHubRepositoryResponse>
+
+    suspend fun getRepository(id: Int): GitHubRepositoryDTO?
 
     /**
      * Saves a [GitHubRepositoryResponse] to the local data source for a given page.
