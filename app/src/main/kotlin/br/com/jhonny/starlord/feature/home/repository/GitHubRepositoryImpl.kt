@@ -31,7 +31,7 @@ internal class GitHubRepositoryImpl(
             languages = languages,
         )?.items ?: emptyList()
 
-        Log.d("GitHubRepositoryImpl", "Returning a total of ${cachedRepositories.size} pages from cache.")
+        Log.d("GitHubRepositoryImpl", "Returning a total of ${cachedRepositories.size} pages from cache and ${remoteRepositories.size} repositories from remote.")
 
         return cachedRepositories.flatMap { it.items } + remoteRepositories
     }
