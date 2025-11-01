@@ -19,6 +19,17 @@ import br.com.jhonny.starlord.ui.screen.home.list.state.ImageUiState
 import br.com.jhonny.starlord.ui.screen.home.provider.ImagePreviewProvider
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 
+/**
+ * A Composable that displays an image for a repository based on the provided [ImageUiState].
+ * It handles loading, error, and success states for the image.
+ *
+ * @param modifier The [Modifier] to be applied to this Composable.
+ * @param name The name of the repository, used in the content description for accessibility.
+ * @param author The author of the repository, used in the content description for accessibility.
+ * @param imageState The current state of the image, which can be [ImageUiState.Loading],
+ * [ImageUiState.Empty], [ImageUiState.Error], or [ImageUiState.Success]. The Composable will
+ * render a different UI for each state.
+ */
 @Composable
 internal fun RepositoryImage(
     modifier: Modifier = Modifier,

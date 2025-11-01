@@ -24,6 +24,8 @@ internal class ApiGitHubDatasource(
                 languages = languages,
             ),
             page = page,
+            order = DEFAULT_ORDER,
+            perPage = DEFAULT_PER_PAGE,
         )
 
         if (response.isSuccessful) {
@@ -53,5 +55,7 @@ internal class ApiGitHubDatasource(
         const val REPOSITORY_LANGUAGE_KEY = "language:"
         const val REPOSITORY_SEARCH_KEY = "in:name,description,readme"
         const val DEFAULT_SEARCH_QUERY = "is:public"
+        const val DEFAULT_ORDER = "desc"
+        const val DEFAULT_PER_PAGE = 100
     }
 }

@@ -34,6 +34,23 @@ import br.com.jhonny.starlord.extension.Empty
 import br.com.jhonny.starlord.ui.preview.ComponentPreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 
+/**
+ * A composable that provides a user interface for searching repositories.
+ * It includes a text field for a search term and a way to filter by programming languages.
+ *
+ * This component is composed of several parts:
+ * 1.  A horizontal list of selectable programming languages (`LanguageSelectionList`).
+ * 2.  A header and a list of badges for currently selected languages, which appear only when at least one language is selected (`SelectedLanguagesHeader` and `SelectedLanguagesBadges`).
+ * 3.  A text input field for the user to type their search query (`RepositorySearchField`).
+ *
+ * @param modifier The modifier to be applied to the component's root Column.
+ * @param searchTerm The current text in the search input field.
+ * @param selectedLanguages A list of strings representing the currently selected programming languages for filtering.
+ * @param onSearchTermChanged A callback function invoked when the user types in the search field. It receives the new search term as a `String`.
+ * @param onLanguageToggled A callback function invoked when a user clicks on a language to select or deselect it. It receives the language name as a `String`.
+ * @param onClearSelectedLanguages A callback function invoked when the user clicks the "clear all" button for selected languages.
+ * @param acceptedLanguages A list of all available programming languages that can be selected for filtering. Defaults to a predefined list.
+ */
 @Composable
 public fun SearchInput(
     modifier: Modifier = Modifier,

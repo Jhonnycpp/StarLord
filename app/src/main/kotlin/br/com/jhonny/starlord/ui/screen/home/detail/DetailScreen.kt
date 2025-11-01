@@ -49,6 +49,20 @@ import java.util.Date
 
 public typealias OnDetailUiEvent = (DetailUiEvent) -> Unit
 
+/**
+ * A state-aware composable that manages the UI state for the detail screen.
+ *
+ * This function observes the `uiState` from the [DetailViewModel] and displays the appropriate
+ * composable based on the current state:
+ * - [DetailUiState.Uninitialized] or [DetailUiState.Loading]: Shows a loading indicator and triggers
+ *   an event to fetch the repository data.
+ * - [DetailUiState.Loaded]: Displays the [DetailScreen] with the fetched repository data.
+ * - [DetailUiState.Error]: Shows a [DetailErrorMessage] to allow the user to retry the operation.
+ *
+ * @param modifier The [Modifier] to be applied to the container.
+ * @param viewModel The [DetailViewModel] instance used to manage the screen's state and logic.
+ * Defaults to an instance provided by Koin.
+ */
 @Composable
 public fun DetailScreenStateOwner(
     modifier: Modifier = Modifier,

@@ -5,6 +5,14 @@ import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.repository.GitHubRepository
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 
+/**
+ * Use case responsible for retrieving a list of GitHub repositories.
+ *
+ * This class orchestrates the fetching of repository data from the [GitHubRepository]
+ * and transforms the resulting DTOs into a list of [RepositoryVO]s suitable for the UI layer.
+ *
+ * @property repository The data source for fetching GitHub repositories.
+ */
 public class RetrieveGitHubRepositoryUseCase(
     private val repository: GitHubRepository,
 ) {

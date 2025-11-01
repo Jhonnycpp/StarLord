@@ -7,9 +7,15 @@ package br.com.jhonny.starlord.ui.screen.home.list.state
  */
 public sealed interface HomeUiEvent {
     /**
-     * Represents a user interface event indicating a request for more data.
-     * This event is typically triggered when the user scrolls to the end of a list
-     * or performs an action that requires loading additional items.
+     * Represents a user interface event indicating a request for more data,
+     * typically for pagination. This event is triggered when the user scrolls
+     * to the end of a list or performs an action that requires loading
+     * the next page of items.
+     *
+     * @property searchTerm The current search term being used, which is necessary
+     *                      to fetch the correct subsequent data.
+     * @property languages A list of selected languages to maintain the filter
+     *                     context while fetching more data.
      */
     public data class RequestMoreData(
         val searchTerm: String,

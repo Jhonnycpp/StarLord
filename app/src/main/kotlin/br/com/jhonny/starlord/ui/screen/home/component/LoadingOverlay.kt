@@ -11,6 +11,13 @@ import androidx.compose.ui.platform.testTag
 import br.com.jhonny.starlord.ui.preview.ComponentPreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 
+/**
+ * A composable function that displays a full-screen overlay with a circular progress indicator.
+ * It's used to signify a loading state, blocking user interaction with the content underneath.
+ * The overlay includes a [Header] at the top and a centered [CircularProgressIndicator].
+ *
+ * @param modifier The [Modifier] to be applied to this overlay.
+ */
 @Composable
 public fun LoadingOverlay(
     modifier: Modifier = Modifier,

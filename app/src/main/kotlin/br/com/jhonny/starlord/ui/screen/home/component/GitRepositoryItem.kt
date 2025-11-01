@@ -29,6 +29,16 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import java.util.Date
 
+/**
+ * A composable that displays a single Git repository item.
+ * It shows essential information like the repository's name, author, star count,
+ * fork count, and primary programming language, along with the author's avatar.
+ * The item is clickable, allowing for navigation or other actions.
+ *
+ * @param modifier The modifier to be applied to the component.
+ * @param item The [RepositoryVO] data to be displayed.
+ * @param onClick A lambda function to be executed when the item is clicked.
+ */
 @Composable
 internal fun GitRepositoryItem(
     modifier: Modifier = Modifier,

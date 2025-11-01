@@ -11,6 +11,12 @@ import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.ui.preview.ComponentPreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 
+/**
+ * Composable function that displays the main header for the home screen.
+ * It shows a centered title text.
+ *
+ * @param modifier The [Modifier] to be applied to the header text.
+ */
 @Composable
 internal fun Header(
     modifier: Modifier = Modifier,

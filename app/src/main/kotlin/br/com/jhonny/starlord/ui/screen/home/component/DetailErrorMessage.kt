@@ -26,6 +26,15 @@ import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.detail.OnDetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 
+/**
+ * A composable function that displays a generic error message for the detail screen.
+ * It includes an error image, a descriptive text, a "Retry" button to re-fetch data,
+ * and a "Back" button to navigate to the previous screen.
+ *
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param onUiEvent A lambda function that handles UI events, such as retrying the data fetch
+ *                  or navigating back. It's triggered by the "Retry" and "Back" buttons.
+ */
 @Composable
 public fun DetailErrorMessage(
     modifier: Modifier = Modifier,

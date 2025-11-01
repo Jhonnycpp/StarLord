@@ -29,6 +29,8 @@ class ApiGitHubDatasourceTest {
                 query = any(),
                 sort = any(),
                 page = any(),
+                order = any(),
+                perPage = any(),
             )
         } returns response
 
@@ -44,6 +46,8 @@ class ApiGitHubDatasourceTest {
                 query = any(),
                 sort = any(),
                 page = any(),
+                order = any(),
+                perPage = any(),
             )
         } returns Response.success(null)
 
@@ -59,6 +63,8 @@ class ApiGitHubDatasourceTest {
                 query = any(),
                 sort = any(),
                 page = any(),
+                order = any(),
+                perPage = any(),
             )
         } returns Response.error(503, mockk(relaxed = true))
 

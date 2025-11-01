@@ -23,6 +23,13 @@ import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.ui.preview.ComponentPreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 
+/**
+ * A composable that displays a generic error message screen.
+ * It includes an error icon, a message, and a "Retry" button.
+ *
+ * @param modifier The modifier to be applied to the layout.
+ * @param onRetry A lambda function to be executed when the "Retry" button is clicked.
+ */
 @Composable
 public fun ErrorMessage(
     modifier: Modifier = Modifier,

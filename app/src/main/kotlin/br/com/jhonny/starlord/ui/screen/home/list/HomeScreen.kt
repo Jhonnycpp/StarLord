@@ -49,6 +49,22 @@ import org.koin.androidx.compose.koinViewModel
 public typealias OnHomeUiEvent = (HomeUiEvent) -> Unit
 private const val SEARCH_DEBOUNCE_MILLIS = 500L
 
+/**
+ * A state-owning composable that observes the [HomeViewModel] and manages the UI state
+ * for the home screen.
+ *
+ * This function is responsible for collecting the [HomeUiState] from the provided [viewModel]
+ * and rendering the appropriate composable based on the current state:
+ * - [HomeUiState.Uninitialized] or [HomeUiState.Loading]: Displays a loading indicator.
+ * - [HomeUiState.Loaded]: Displays the main [HomeScreen] with the list of repositories.
+ * - [HomeUiState.Error]: Displays an error message with a retry option.
+ *
+ * It also triggers the initial data load by sending a [HomeUiEvent.RequestMoreData] event
+ * when the composable first enters the composition.
+ *
+ * @param modifier The [Modifier] to be applied to the container.
+ * @param viewModel An instance of [HomeViewModel], typically provided by Koin's `koinViewModel()`.
+ */
 @Composable
 public fun HomeScreeStateOwner(
     modifier: Modifier = Modifier,
