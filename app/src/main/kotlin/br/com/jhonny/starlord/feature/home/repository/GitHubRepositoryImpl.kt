@@ -5,9 +5,7 @@ import br.com.jhonny.starlord.feature.home.datasource.LocalGitHubDatasource
 import br.com.jhonny.starlord.feature.home.datasource.RemoteGitHubDatasource
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
-import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
-@OptIn(ExperimentalAtomicApi::class)
 internal class GitHubRepositoryImpl(
     private val localDatasource: LocalGitHubDatasource,
     private val remoteDatasource: RemoteGitHubDatasource,
@@ -17,33 +15,30 @@ internal class GitHubRepositoryImpl(
         searchTerm: String,
         languages: List<String>
     ): List<GitHubRepositoryDTO> {
-        val currentPage = localDatasource.getCurrentPage(searchTerm, languages)?.plus(1) ?: 1
+        val currentPage = localDatasource.getCurrentPage(searchTerm, languages) ?: 0
+        val nextPage = currentPage + 1
 
-        val currentRepositories = localDatasource.getRepositories(
+        Log.d("GitHubRepositoryImpl", "[searchQuery: $searchTerm][languages: $languages][currentPage: $currentPage][fetchingPage: $nextPage]")
+
+        val cachedRepositories = localDatasource.getRepositories(
             query = searchTerm,
             languages = languages,
         )
 
-        Log.d("GitHubRepositoryImpl", "[searchQuery: $searchTerm][languages: $languages][currentPage: $currentPage][currentRepositories.size: ${currentRepositories.size}]")
+        val remoteRepositories = fetchAndSaveRepositories(
+            page = nextPage,
+            query = searchTerm,
+            languages = languages,
+        )?.items ?: emptyList()
 
-        if (localDatasource.contains { page == currentPage && query == searchTerm && this.languages == languages }) {
-            Log.d("GitHubRepositoryImpl", "Returning current repositories")
-            return currentRepositories.flatMap { it.items }
-        } else {
-            Log.d("GitHubRepositoryImpl", "Returning remote repositories")
-            val repository = retrieveFromRemote(
-                page = currentPage,
-                query = searchTerm,
-                languages = languages,
-            )?.items ?: emptyList()
+        Log.d("GitHubRepositoryImpl", "Returning a total of ${cachedRepositories.size} pages from cache.")
 
-            return currentRepositories.flatMap { it.items } + repository
-        }
+        return cachedRepositories.flatMap { it.items } + remoteRepositories
     }
 
     override suspend fun getRepository(id: Int): GitHubRepositoryDTO? = localDatasource.getRepository(id)
 
-    private suspend fun retrieveFromRemote(
+    private suspend fun fetchAndSaveRepositories(
         page: Int,
         query: String,
         languages: List<String>,

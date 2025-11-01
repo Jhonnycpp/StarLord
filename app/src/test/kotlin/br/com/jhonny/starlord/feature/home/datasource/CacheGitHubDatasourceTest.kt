@@ -10,9 +10,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.ConcurrentHashMap
@@ -162,27 +160,6 @@ class CacheGitHubDatasourceTest {
         val datasource = CacheGitHubDatasource()
         val result = datasource.getCurrentPage("query", listOf("language"))
         assertNull(result)
-    }
-
-    @Test
-    fun `contains should return true when condition met`() = runTest {
-        val datasource = CacheGitHubDatasource(ConcurrentHashMap(mapOf(cacheKey to expectedResponse)))
-        val result = datasource.contains { page == 1 && query == "query" }
-        assertTrue(result)
-    }
-
-    @Test
-    fun `contains should return false when condition not met`() = runTest {
-        val datasource = CacheGitHubDatasource(ConcurrentHashMap(mapOf(cacheKey to expectedResponse)))
-        val result = datasource.contains { page == 2 }
-        assertFalse(result)
-    }
-
-    @Test
-    fun `contains should return false for empty cache`() = runTest {
-        val datasource = CacheGitHubDatasource()
-        val result = datasource.contains { true }
-        assertFalse(result)
     }
 
     private companion object {

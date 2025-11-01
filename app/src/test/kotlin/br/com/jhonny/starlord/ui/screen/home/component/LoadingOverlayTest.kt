@@ -10,19 +10,19 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ProgressMessageTest {
+class LoadingOverlayTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            ProgressMessage()
+            LoadingOverlay()
         }
     }
 
     @Test
     fun should_ProgressMessage_IsDisplayed() {
-        composeTestRule.onNodeWithTag("ProgressMessage").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("LoadingIndicator").assertIsDisplayed()
     }
 }

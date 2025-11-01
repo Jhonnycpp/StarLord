@@ -36,6 +36,4 @@ internal class CacheGitHubDatasource(
 
         return currentPage
     }
-
-    override suspend fun contains(block: CacheKey.() -> Boolean): Boolean = cache.keys.any(block)
 }

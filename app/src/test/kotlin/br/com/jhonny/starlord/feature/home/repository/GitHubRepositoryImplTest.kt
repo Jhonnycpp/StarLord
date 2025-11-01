@@ -30,21 +30,22 @@ internal class GitHubRepositoryImplTest {
 
     @Test
     fun `should successfully retrieve repositories from local datasource`() = runTest {
-        coEvery { localDatasource.contains(any()) } returns true
         coEvery { localDatasource.getCurrentPage(any(), any()) } returns 1
         coEvery { localDatasource.getRepositories(any(), any()) } returns listOf(expectedResponse)
+        coEvery { remoteDatasource.getRepositories(any(), any(), any()) } returns null
 
         val result = repository.getRepositories("query", listOf("language"))
 
         assertEquals(expectedResponse.items, result)
-        coVerify(exactly = 1) { localDatasource.getRepositories("query", listOf("language")) }
-        coVerify(exactly = 0) { remoteDatasource.getRepositories(any(), any(), any()) }
+        coVerify {
+            localDatasource.getRepositories("query", listOf("language"))
+            remoteDatasource.getRepositories(any(), any(), any())
+        }
     }
 
     @Test
     fun `should successfully retrieve repositories from remote datasource`() = runTest {
-        coEvery { localDatasource.contains(any()) } returns false
-        coEvery { localDatasource.getCurrentPage(any(), any()) } returns 1
+        coEvery { localDatasource.getCurrentPage(any(), any()) } returns null
         coEvery { localDatasource.getRepositories(any(), any()) } returns emptyList()
         coJustRun { localDatasource.save(any(), any(), any(), any()) }
         coEvery { remoteDatasource.getRepositories(any(), any(), any()) } returns expectedResponse
@@ -52,13 +53,14 @@ internal class GitHubRepositoryImplTest {
         val result = repository.getRepositories("query", listOf("language"))
 
         assertEquals(expectedResponse.items, result)
-        coVerify(exactly = 1) { remoteDatasource.getRepositories(2, "query", listOf("language")) }
-        coVerify(exactly = 1) { localDatasource.save(2, "query", listOf("language"), expectedResponse) }
+        coVerify{
+            remoteDatasource.getRepositories(1, "query", listOf("language"))
+            localDatasource.save(1, "query", listOf("language"), expectedResponse)
+        }
     }
 
     @Test
     fun `should successfully retrieve repositories with multiple pages`() = runTest {
-        coEvery { localDatasource.contains(any()) } returns false
         coEvery { localDatasource.getCurrentPage(any(), any()) } returns 1
         coEvery { localDatasource.getRepositories(any(), any()) } returns listOf(expectedResponse)
         coJustRun { localDatasource.save(any(), any(), any(), any()) }
@@ -67,16 +69,17 @@ internal class GitHubRepositoryImplTest {
         val result = repository.getRepositories("query", listOf("language"))
 
         assertTrue(result.size == 2)
-        coVerify(exactly = 1) { localDatasource.getRepositories("query", listOf("language")) }
-        coVerify(exactly = 1) { remoteDatasource.getRepositories(2, "query", listOf("language")) }
-        coVerify(exactly = 1) { localDatasource.save(2, "query", listOf("language"), expectedResponse) }
+        coVerify(exactly = 1) {
+            localDatasource.getRepositories("query", listOf("language"))
+            remoteDatasource.getRepositories(2, "query", listOf("language"))
+            localDatasource.save(2, "query", listOf("language"), expectedResponse)
+        }
     }
 
     @Test
     fun `should fail retrieve repositories`() = runTest {
         coEvery { localDatasource.getCurrentPage(any(), any()) } returns null
         coEvery { localDatasource.getRepositories(any(), any()) } returns emptyList()
-        coEvery { localDatasource.contains(any()) } returns false
         coEvery { remoteDatasource.getRepositories(any(), any(), any()) } returns null
 
         val result = repository.getRepositories("query", listOf("language"))

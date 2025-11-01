@@ -2,7 +2,6 @@ package br.com.jhonny.starlord.feature.home.datasource
 
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryDTO
 import br.com.jhonny.starlord.feature.home.dto.GitHubRepositoryResponse
-import br.com.jhonny.starlord.feature.home.entity.CacheKey
 
 /**
  * Interface responsible for defining write operations related to GitHub data.
@@ -40,8 +39,4 @@ internal interface LocalGitHubDatasource {
         query: String,
         languages: List<String>,
     ): Int?
-
-    suspend fun contains(
-        block: CacheKey.() -> Boolean,
-    ): Boolean
 }

@@ -12,7 +12,7 @@ import br.com.jhonny.starlord.ui.preview.ComponentPreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 
 @Composable
-public fun ProgressMessage(
+public fun LoadingOverlay(
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -24,7 +24,7 @@ public fun ProgressMessage(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .testTag("ProgressMessage")
+                .testTag("LoadingIndicator")
                 .fillMaxSize()
         ) {
             CircularProgressIndicator()
@@ -34,9 +34,9 @@ public fun ProgressMessage(
 
 @ComponentPreview
 @Composable
-private fun ProgressMessagePreview() {
+private fun LoadingOverlayPreview() {
     PreviewContentRender { modifier ->
-        ProgressMessage(
+        LoadingOverlay(
             modifier = modifier,
         )
     }

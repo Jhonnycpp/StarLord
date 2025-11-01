@@ -36,7 +36,7 @@ import br.com.jhonny.starlord.ui.preview.DevicePreview
 import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.component.DetailErrorMessage
 import br.com.jhonny.starlord.ui.screen.home.component.Header
-import br.com.jhonny.starlord.ui.screen.home.component.ProgressMessage
+import br.com.jhonny.starlord.ui.screen.home.component.LoadingOverlay
 import br.com.jhonny.starlord.ui.screen.home.component.RepositoryImage
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiState
@@ -63,7 +63,7 @@ public fun DetailScreenStateOwner(
                 modifier = modifier
                     .testTag("DetailScreenLoading"),
             ) {
-                ProgressMessage(
+                LoadingOverlay(
                     modifier = modifier,
                 )
             }

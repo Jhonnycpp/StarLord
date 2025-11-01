@@ -36,7 +36,7 @@ import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.component.ErrorMessage
 import br.com.jhonny.starlord.ui.screen.home.component.GitRepositoryList
 import br.com.jhonny.starlord.ui.screen.home.component.Header
-import br.com.jhonny.starlord.ui.screen.home.component.ProgressMessage
+import br.com.jhonny.starlord.ui.screen.home.component.LoadingOverlay
 import br.com.jhonny.starlord.ui.screen.home.component.SearchInput
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiEvent
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiState
@@ -64,7 +64,7 @@ public fun HomeScreeStateOwner(
                 modifier = Modifier
                     .testTag("HomeScreenLoading")
             ) {
-                ProgressMessage(
+                LoadingOverlay(
                     modifier = modifier,
                 )
             }
