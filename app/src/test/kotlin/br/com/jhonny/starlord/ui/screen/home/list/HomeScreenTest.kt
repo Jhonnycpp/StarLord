@@ -1,12 +1,17 @@
 package br.com.jhonny.starlord.ui.screen.home.list
 
+import android.content.res.Configuration
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.isNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.jhonny.starlord.extension.Empty
 import br.com.jhonny.starlord.ui.screen.home.list.state.HomeUiEvent
@@ -28,7 +33,6 @@ import java.util.Date
 class HomeScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
-
     private val viewModel = mockk<HomeViewModel>()
     private val uiState = MutableStateFlow<HomeUiState>(HomeUiState.Uninitialized)
 
@@ -127,11 +131,53 @@ class HomeScreenTest {
         composeTestRule.onNodeWithTag("HomeScreenError", useUnmergedTree = true).assertIsDisplayed()
     }
 
-    private fun setScreenContent() {
+    @Test
+    fun should_OpenDrawer_WhenSearchIconIsClicked_InLandscapeMode() {
+        val repositories = buildRepositories(4)
+        uiState.update { HomeUiState.Loaded(repositories = repositories) }
+
+        setScreenContent(Configuration.ORIENTATION_LANDSCAPE)
+
+        composeTestRule.onNodeWithTag("HomeScreenSearchInput").isNotDisplayed()
+        composeTestRule.onNodeWithTag("HomeScreenSearchButton")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule.waitForIdle()
+
+        composeTestRule.onNodeWithTag("HomeScreenSearchInput").assertIsDisplayed()
+    }
+
+    @Test
+    fun should_DebounceSearch_When_Typing() {
+        val repositories = buildRepositories(4)
+        uiState.update { HomeUiState.Loaded(repositories = repositories) }
+        setScreenContent()
+        val searchTerm = "test"
+
+        composeTestRule.onNodeWithTag("RepositorySearchField").performTextInput(searchTerm)
+        composeTestRule.mainClock.advanceTimeBy(SEARCH_DEBOUNCE_MILLIS - 100)
+
+        verify(exactly = 0) { viewModel.onUiEvent(HomeUiEvent.SearchRepositories(searchTerm, emptyList())) }
+
+        composeTestRule.mainClock.advanceTimeBy(200)
+
+        verify(exactly = 1) { viewModel.onUiEvent(HomeUiEvent.SearchRepositories(searchTerm, emptyList())) }
+    }
+
+    private fun setScreenContent(
+        orientation: Int = Configuration.ORIENTATION_PORTRAIT,
+    ) {
         composeTestRule.setContent {
-            HomeScreeStateOwner(
-                viewModel = viewModel,
-            )
+            CompositionLocalProvider(
+                LocalConfiguration provides Configuration().apply {
+                    this.orientation = orientation
+                }
+            ) {
+                HomeScreeStateOwner(
+                    viewModel = viewModel,
+                )
+            }
         }
     }
 
@@ -152,5 +198,9 @@ class HomeScreenTest {
             starCount = it,
             forkCount = it,
         )
+    }
+
+    private companion object {
+        const val SEARCH_DEBOUNCE_MILLIS = 500L
     }
 }

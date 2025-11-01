@@ -102,6 +102,19 @@ private fun HomeScreen(
     repositories: List<RepositoryVO>,
     onUiEvent: OnHomeUiEvent,
 ) {
+    HomeContent(
+        modifier = modifier,
+        repositories = repositories,
+        onUiEvent = onUiEvent,
+    )
+}
+
+@Composable
+private fun HomeContent(
+    modifier: Modifier,
+    repositories: List<RepositoryVO>,
+    onUiEvent: OnHomeUiEvent,
+) {
     var searchTerm by rememberSaveable { mutableStateOf(String.Empty) }
     var selectedLanguages by rememberSaveable { mutableStateOf(emptyList<String>()) }
     var isStarting by remember { mutableStateOf(true) }
@@ -120,7 +133,8 @@ private fun HomeScreen(
     with(LocalConfiguration.current) {
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             HomePortrait(
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("HomeScreenPortrait"),
                 searchTerm = searchTerm,
                 selectedLanguages = selectedLanguages,
                 repositories = repositories,
@@ -139,7 +153,8 @@ private fun HomeScreen(
             )
         } else {
             HomeLandscape(
-                modifier = modifier,
+                modifier = modifier
+                    .testTag("HomeScreenLandscape"),
                 searchTerm = searchTerm,
                 selectedLanguages = selectedLanguages,
                 repositories = repositories,
@@ -212,7 +227,9 @@ private fun HomeLandscape(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .testTag("HomeScreenSearchButton"),
                         onClick = {
                             scope.launch {
                                 if (drawerState.isOpen) drawerState.close() else drawerState.open()
