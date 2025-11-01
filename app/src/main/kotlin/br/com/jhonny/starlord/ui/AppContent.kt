@@ -26,7 +26,7 @@ public fun AppContent(
     navGraph: NavGraph,
     navigationManager: Navigation = koinInject(),
 ) {
-    Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
+    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         val navigationState by navigationManager.state.collectAsState()
 
         NavHost(
@@ -36,7 +36,7 @@ public fun AppContent(
             exitTransition = { fadeOut(animationSpec = tween(700)) + slideOutHorizontally() },
             popEnterTransition = { fadeIn(animationSpec = tween(700)) + slideInHorizontally(initialOffsetX = { -it }) },
             popExitTransition = { fadeOut(animationSpec = tween(700)) + slideOutHorizontally(targetOffsetX = { -it }) },
-            modifier = Modifier.Companion.padding(
+            modifier = Modifier.padding(
                 paddingValues = innerPadding
             ),
         )
