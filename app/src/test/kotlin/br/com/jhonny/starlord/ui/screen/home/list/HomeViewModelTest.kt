@@ -34,9 +34,9 @@ class HomeViewModelTest {
 
     @Test
     fun `on ui event RequestMoreData should successfully call retrieveGitHubRepositoryUseCase`() = runTest {
-        coEvery { retrieveGitHubRepositoryUseCase() } returns expectedResult
+        coEvery { retrieveGitHubRepositoryUseCase(any(), any()) } returns expectedResult
 
-        viewModel.onUiEvent(HomeUiEvent.RequestMoreData)
+        viewModel.onUiEvent(HomeUiEvent.RequestMoreData("query", listOf("language")))
 
         viewModel.uiState.test {
             scope.scheduler.advanceUntilIdle()
@@ -51,14 +51,14 @@ class HomeViewModelTest {
 
     @Test
     fun `on multiple ui event RequestMoreData should successfully perform one call to retrieveGitHubRepositoryUseCase`() = runTest {
-        coEvery { retrieveGitHubRepositoryUseCase() } coAnswers {
+        coEvery { retrieveGitHubRepositoryUseCase(any(), any()) } coAnswers {
             delay(100)
             expectedResult
         }
 
         viewModel.uiState.test {
             repeat(5) {
-                viewModel.onUiEvent(HomeUiEvent.RequestMoreData)
+                viewModel.onUiEvent(HomeUiEvent.RequestMoreData("query", listOf("language")))
             }
 
             scope.scheduler.advanceUntilIdle()
@@ -71,21 +71,21 @@ class HomeViewModelTest {
         }
 
         coVerify(exactly = 1) {
-            retrieveGitHubRepositoryUseCase()
+            retrieveGitHubRepositoryUseCase("query", listOf("language"))
         }
     }
 
     @Test
     fun `on ui event RequestMoreData should return Error when retrieveGitHubRepositoryUseCase returns emptyList`() = runTest {
-        coEvery { retrieveGitHubRepositoryUseCase() } returns emptyList()
+        coEvery { retrieveGitHubRepositoryUseCase(any(), any()) } returns emptyList()
 
-        viewModel.onUiEvent(HomeUiEvent.RequestMoreData)
+        viewModel.onUiEvent(HomeUiEvent.RequestMoreData("query", listOf("language")))
 
         viewModel.uiState.test {
             scope.scheduler.advanceUntilIdle()
 
             assertEquals(HomeUiState.Uninitialized, awaitItem())
-            assertEquals(HomeUiState.Error, awaitItem())
+            assertEquals(HomeUiState.Error("query", listOf("language")), awaitItem())
         }
     }
 

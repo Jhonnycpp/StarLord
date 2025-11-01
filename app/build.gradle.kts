@@ -20,7 +20,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments += "clearPackageData" to "true"
     }
 
     buildTypes {
@@ -50,6 +49,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     testOptions {
@@ -96,6 +96,7 @@ dependencies {
     implementation(libs.img.coil.compose)
     implementation(libs.img.coil.network.okhttp)
 
+    implementation(libs.http.client.logging.interceptor)
     implementation(libs.http.retrofit)
     implementation(libs.http.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
@@ -110,7 +111,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
     testImplementation(kotlin("test"))
-    testImplementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.androidx.navigation.testing)
 

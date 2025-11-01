@@ -10,15 +10,23 @@ import retrofit2.http.Query
  */
 public interface GitHubRepositoryService {
     /**
-     * Retrieves a list of GitHub repositories.
+     * Fetches a paginated list of GitHub repositories based on a search query.
      *
-     * @param sort The sort field. Can be one of: stars, forks, help-wanted-issues, updated.
+     * This function queries the GitHub API's `search/repositories` endpoint.
+     *
+     * @param query The search keywords, as well as any qualifiers.
+     * @param sort The sort field. Can be one of: stars, forks, help-wanted-issues, updated. Default: best match.
      * @param page The page number of the results to retrieve.
-     * @return A [Response] object containing a [GitHubRepositoryResponse] if successful, or an error otherwise.
+     * @param order The sort order. Can be `desc` or `asc`. Default: `desc`.
+     * @param perPage The number of results to return per page.
+     * @return A Retrofit [Response] wrapping a [GitHubRepositoryResponse] on success.
      */
-    @GET("search/repositories?q=language:kotlin")
+    @GET("search/repositories")
     public suspend fun getRepositories(
+        @Query("q") query: String,
         @Query("sort") sort: String,
         @Query("page") page: Int,
+        @Query("order") order: String,
+        @Query("per_page") perPage: Int,
     ): Response<GitHubRepositoryResponse>
 }

@@ -32,12 +32,13 @@ public class HomeViewModel(
 
     public fun onUiEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.RequestMoreData -> requestMoreData()
+            is HomeUiEvent.RequestMoreData -> searchOrRequestMoreData(event.searchTerm, event.languages)
+            is HomeUiEvent.SearchRepositories -> searchOrRequestMoreData(event.searchTerm, event.languages)
             is HomeUiEvent.ShowRepositoryInfo -> navigation.navigate(Route.Detail(event.id))
         }
     }
 
-    private fun requestMoreData() {
+    private fun searchOrRequestMoreData(query: String, languages: List<String>) {
         Log.d("HomeViewModel", "Starting to requesting more data.")
         if (!canLoadMore.compareAndSet(expectedValue = true, newValue = false)) {
             Log.d("HomeViewModel", "Can't load more data.")
@@ -47,16 +48,16 @@ public class HomeViewModel(
 
         viewModelScope.launch(dispatcher) {
             Log.d("HomeViewModel", "Requesting more data.")
-            val repositories = retrieveGitHubRepositoryUseCase()
-            _uiState.update { repositories.toHomeUiState() }
+            val repositories = retrieveGitHubRepositoryUseCase(query, languages)
+            _uiState.update { repositories.toHomeUiState(query, languages) }
             canLoadMore.store(true)
             Log.d("HomeViewModel", "Finished to requesting more data.")
         }
     }
 
-    private fun List<RepositoryVO>.toHomeUiState() = if (isNotEmpty()) {
+    private fun List<RepositoryVO>.toHomeUiState(query: String, languages: List<String>) = if (isNotEmpty()) {
         HomeUiState.Loaded(this)
     } else {
-        HomeUiState.Error
+        HomeUiState.Error(query, languages)
     }
 }

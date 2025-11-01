@@ -1,6 +1,7 @@
 package br.com.jhonny.starlord.ui.screen.home.provider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import br.com.jhonny.starlord.ui.screen.home.provider.RepositoryPreviewProvider.Companion.sample
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
 import java.util.Date
 import kotlin.random.Random
