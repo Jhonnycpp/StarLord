@@ -30,8 +30,15 @@ public sealed interface HomeUiState {
     public data class Loaded(val repositories: List<RepositoryVO>) : HomeUiState
 
     /**
-     * Represents the error state of the home screen.
-     * This state is used when an error occurs while fetching data.
+     * Represents the error state of the Home screen.
+     * This state is used when an error occurs while fetching data,
+     * retaining the search context to allow for a retry.
+     *
+     * @property searchTerm The search term that was used when the error occurred.
+     * @property languages The list of language filters that were active when the error occurred.
      */
-    public data object Error : HomeUiState
+    public data class Error(
+        val searchTerm: String,
+        val languages: List<String>,
+    ) : HomeUiState
 }

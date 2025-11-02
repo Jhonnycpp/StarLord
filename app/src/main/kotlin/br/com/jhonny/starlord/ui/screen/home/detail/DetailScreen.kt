@@ -17,7 +17,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,15 +32,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
 import br.com.jhonny.starlord.extension.toImageUiState
-import br.com.jhonny.starlord.ui.DevicePreview
+import br.com.jhonny.starlord.ui.preview.DevicePreview
+import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.component.DetailErrorMessage
 import br.com.jhonny.starlord.ui.screen.home.component.Header
-import br.com.jhonny.starlord.ui.screen.home.component.ProgressMessage
+import br.com.jhonny.starlord.ui.screen.home.component.LoadingOverlay
 import br.com.jhonny.starlord.ui.screen.home.component.RepositoryImage
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiState
 import br.com.jhonny.starlord.ui.screen.home.vo.RepositoryVO
-import br.com.jhonny.starlord.ui.theme.StarLordTheme
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -50,6 +49,20 @@ import java.util.Date
 
 public typealias OnDetailUiEvent = (DetailUiEvent) -> Unit
 
+/**
+ * A state-aware composable that manages the UI state for the detail screen.
+ *
+ * This function observes the `uiState` from the [DetailViewModel] and displays the appropriate
+ * composable based on the current state:
+ * - [DetailUiState.Uninitialized] or [DetailUiState.Loading]: Shows a loading indicator and triggers
+ *   an event to fetch the repository data.
+ * - [DetailUiState.Loaded]: Displays the [DetailScreen] with the fetched repository data.
+ * - [DetailUiState.Error]: Shows a [DetailErrorMessage] to allow the user to retry the operation.
+ *
+ * @param modifier The [Modifier] to be applied to the container.
+ * @param viewModel The [DetailViewModel] instance used to manage the screen's state and logic.
+ * Defaults to an instance provided by Koin.
+ */
 @Composable
 public fun DetailScreenStateOwner(
     modifier: Modifier = Modifier,
@@ -64,7 +77,7 @@ public fun DetailScreenStateOwner(
                 modifier = modifier
                     .testTag("DetailScreenLoading"),
             ) {
-                ProgressMessage(
+                LoadingOverlay(
                     modifier = modifier,
                 )
             }
@@ -138,7 +151,7 @@ private fun DetailPortrait(
     onUiEvent: OnDetailUiEvent = {},
 ) {
     Column(
-        horizontalAlignment = Alignment.Companion.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp),
@@ -401,29 +414,25 @@ private fun DetailLandscape(
 @DevicePreview
 @Composable
 private fun DetailScreenPreview() {
-    StarLordTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            DetailContent(
-                modifier = Modifier.padding(
-                    paddingValues = innerPadding
-                ),
-                repository = RepositoryVO(
-                    id = 1,
-                    name = "Lumos",
-                    author = "Jhonatan",
-                    starCount = 124,
-                    forkCount = 37,
-                    userAvatar = "https://picsum.photos/200?random=1",
-                    description = "The Magic Mask for Android",
-                    language = "Kotlin",
-                    licenseName = "GNU General Public License v3.0",
-                    createdAt = Date(),
-                    updatedAt = Date(),
-                    pushedAt = Date(),
-                    watcherCount = 33,
-                    issueCount = 2,
-                ),
-            )
-        }
+    PreviewContentRender { modifier ->
+        DetailContent(
+            modifier = modifier,
+            repository = RepositoryVO(
+                id = 1,
+                name = "Lumos",
+                author = "Jhonatan",
+                starCount = 124,
+                forkCount = 37,
+                userAvatar = "https://picsum.photos/200?random=1",
+                description = "The Magic Mask for Android",
+                language = "Kotlin",
+                licenseName = "GNU General Public License v3.0",
+                createdAt = Date(),
+                updatedAt = Date(),
+                pushedAt = Date(),
+                watcherCount = 33,
+                issueCount = 2,
+            ),
+        )
     }
 }

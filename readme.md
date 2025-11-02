@@ -1,31 +1,31 @@
 # StarLord
 
-StarLord é um projeto desenvolvido para Android com o kotlin.
+StarLord is a project developed for Android using Kotlin.
 
-A proposta do aplicativo é listar os repositórios do github com mais estrelas ⭐
-feitos na linguagem kotlin.
+The application's purpose is to list GitHub repositories with the most stars ⭐
+that are written in the Kotlin language.
 
-## 🚀 Começando
+## 🚀 Getting Started
 
-Para começar a trabalhar com o projeto StarLord, siga os passos abaixo:
+To start working with the StarLord project, follow the steps below:
 
-### 🧰 Pré-requisitos
+### 🧰 Prerequisites
 
 - Git
-- Android Studio Narwhal 3 Feature Drop | 2025.1.3 ou superior
-- JDK 21 ou superior (opcional, pois o Android Studio possui a jdk integrada)
-- [Gradle +8.](https://gradle.org/install/) (opcional, pois o projeto inclui o wrapper)
+- Android Studio Narwhal 3 Feature Drop | 2025.1.3 or higher
+- JDK 21 or higher (optional, as Android Studio has an integrated JDK)
+- [Gradle 8+](https://gradle.org/install/) (optional, as the project includes the wrapper)
 
-### 📦 Instalação
+### 📦 Installation
 
-## 1. Clone o repositório:
+## 1. Clone the repository:
 
 ```bash
    git clone git@github.com:Jhonnycpp/StarLord.git
    cd StarLord
 ```
    
-## 2. 📁 Estrutura de Diretórios
+## 2. 📁 Directory Structure
 
 ```
 StarLord/
@@ -33,7 +33,7 @@ StarLord/
 ├── LICENSE
 ├── build.gradle.kts
 ├── gradle/
-|     └── libs.versions.toml                   <--- Configurações de dependências
+|     └── libs.versions.toml                   <--- Version catalog and dependencies
 ├── gradlew
 ├── gradlew.bat
 ├── settings.gradle.kts
@@ -42,86 +42,86 @@ StarLord/
         └── main/
             └── kotlin/
                 └── br/com/jhonny/starlord/
-                    ├── di                      <--- Configuração dos modulos injetaveis
-                    ├── extension               <--- Extensões para facilitar a vida
-                    ├── feature                 <--- As camadas de funcionalidade
-                    ├── ui                      <--- As camadas de visuais
-                    |    ├── navigation         <--- Navegação
-                    |    ├── screen             <--- Telas separadas por funcionalidade
-                    |    ├── theme              <--- Tema do app
-                    |    └── MainActivity.kt    <--- Ponto de entrada do app
-                    └── MainApplication.kt      <--- Ponto de entrada do projeto
+                    ├── di                      <--- Dependency injection configuration (Koin)
+                    ├── extension               <--- Extension functions
+                    ├── feature                 <--- Domain and data layers (Use Cases, Repositories)
+                    ├── ui                      <--- Presentation layer (Compose Screens, ViewModels)
+                    |    ├── navigation         <--- Navigation logic
+                    |    ├── screen             <--- Screens and their ViewModels
+                    |    ├── theme              <--- App theme (Material 3)
+                    |    └── MainActivity.kt    <--- UI entry point
+                    └── MainApplication.kt      <--- Project entry point (Library initialization)
 ```
-## 3. 🛠 Tecnologias Utilizadas
+## 3. 🛠 Technologies Used
 
-Este projeto utiliza um conjunto moderno de tecnologias para desenvolvimento Android:
-- Linguagem: Kotlin
-- Arquitetura: 
-  - Clean Architecture: Esta é uma arquitetura de software que visa separar as preocupações do seu código em camadas distintas (como Domínio, Casos de Uso, Interface Adapters e Frameworks & Drivers). O objetivo é criar um sistema mais testável, manutenível e independente de frameworks ou detalhes de implementação externos.
-  - MVVM: Esta é uma arquitetura de apresentação (parte da camada de "Interface Adapters" na Clean Architecture) que facilita a separação da lógica de apresentação da UI.
-    - Model: Representa os dados e a lógica de negócios (geralmente vindo da camada de Domínio/Casos de Uso na Clean Architecture).
-    - View: A UI (no seu caso, implementada com Jetpack Compose) que observa o ViewModel.
-    - ViewModel: Expõe dados do Model para a View e lida com a lógica de apresentação e as interações do usuário. Ele não tem conhecimento direto da View.
-- Princípios de Design de Código:
-  - SOLID: Adotamos os cinco princípios SOLID (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion) como guia para escrever código de alta qualidade, promovendo a manutenibilidade, testabilidade e escalabilidade do projeto.
-- Interface de Usuário:
-  - Jetpack Compose para uma UI declarativa e moderna.
-  - Material Design 3 para componentes visuais.
-- Injeção de Dependência:
-  - Koin para gerenciamento de dependências leve e pragmático.
+This project uses a modern set of technologies for Android development:
+- Language: Kotlin
+- Architecture: 
+  - Clean Architecture: This is a software architecture that aims to separate your code's concerns into distinct layers (such as Domain, Use Cases, Interface Adapters, and Frameworks & Drivers). The goal is to create a more testable, maintainable, and independent system from external frameworks or implementation details.
+  - MVVM: This is a presentation architecture (part of the "Interface Adapters" layer in Clean Architecture) that facilitates the separation of presentation logic from the UI.
+    - Model: Represents the data and business logic (usually coming from the Domain/Use Cases layer in Clean Architecture).
+    - View: The UI (in your case, implemented with Jetpack Compose) that observes the ViewModel.
+    - ViewModel: Exposes data from the Model to the View and handles presentation logic and user interactions. It has no direct knowledge of the View.
+- Code Design Principles:
+  - SOLID: We adopted the five SOLID principles (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion) as a guide to writing high-quality code, promoting the project's maintainability, testability, and scalability.
+- User Interface:
+  - Jetpack Compose for a declarative and modern UI.
+  - Material Design 3 for visual components.
+- Dependency Injection:
+  - Koin for lightweight and pragmatic dependency management.
 - Networking:
-  - Retrofit para requisições HTTP type-safe.
-  - OkHttp (indiretamente via Coil e Retrofit) como cliente HTTP.•
-- KotlinX Serialization para parsing de JSON.
-- Carregamento de Imagens:
-  - Coil para carregamento eficiente de imagens.
-- Navegação: Jetpack Navigation Compose para navegação entre telas do Compose.
-- Testes:
-  - Unitários: JUnit 4, MockK, Turbine (para Flows), KotlinX Coroutines Test.
-  - Instrumentados: JUnit 4, Compose UI Test, Navigation Testing.
-- Utilitários AndroidX/Jetpack: Core KTX, Lifecycle KTX.
-- Build System: Gradle com Kotlin DSL.
-- Cobertura de Código: Kover.
+  - Retrofit for type-safe HTTP requests.
+  - OkHttp (indirectly via Coil and Retrofit) as the HTTP client.
+  - KotlinX Serialization for JSON parsing.
+- Image Loading:
+  - Coil for efficient image loading.
+- Navigation: Jetpack Navigation Compose for navigation between Compose screens.
+- Tests:
+  - Unit: JUnit 4, MockK, Turbine (for Flows), KotlinX Coroutines Test, Robolectric.
+  - Instrumented: JUnit 4, Espresso, MockK, Compose UI Test, Navigation Testing.
+- AndroidX/Jetpack Utilities: Core KTX, Lifecycle KTX.
+- Build System: Gradle with Kotlin DSL.
+- Code Coverage: Kover.
 
-## 4. 🧰 Compile o projeto:
+## 4. 🧰 Compile the project:
 ```bash
-    ./gradlew :app:assemble
+    ./gradlew assemble
 ```
 
-## 5. 🧪 Testes
-### Unitários 
+## 5. 🧪 Tests
+### Unit 
 ```bash
-    ./gradlew :app:check
+    ./gradlew check
 ```
 
-### Instrumentados
+### Instrumented
 ```bash
-    emulator -list-avds # Lista os avds disponíveis
-    emulator -avd <nome_do_avd> -netdelay none -netspeed full # Inicia o emulador com a velocidade máxima na rede
-    adb wait-for-device # Espera até que o dispositivo esteja conectado
-    while [[ $(adb shell getprop sys.boot_completed | tr -d '\r') != "1" ]]; do # Espera até que o dispositivo esteja ligado
+    emulator -list-avds # List available avds
+    emulator -avd <avd_name> -netdelay none -netspeed full # Start the emulator with maximum network speed
+    adb wait-for-device # Wait until the device is connected
+    while [[ $(adb shell getprop sys.boot_completed | tr -d '\r') != "1" ]]; do # Wait until the device is booted
     sleep 1
     done
-    ./gradlew connectedAndroidTest # Executa os testes instrumentados
+    ./gradlew connectedAndroidTest # Run instrumented tests
 ```  
 
 ## 🌡️ 6. Coverage
-Este comando gera um relatório de cobertura de código unitário e instrumentado.
+This command generates a unit and instrumented code coverage report.
 ```bash
-    ./gradlew :app:koverHtmlReport
+    ./gradlew koverHtmlReport
 ```
 
-Para visualizar basta abrir o relatorio em html na pasta `./app/build/reports/kover/html/index.html` no seu navegador de preferencia.
+To view it, simply open the HTML report in the `./app/build/reports/kover/html/index.html` folder in your preferred browser.
 
 ## 📱 7. App
-O possui a funcionalidade de exibir os repositórios do github com mais estrelas ⭐
+The app has the functionality to display the GitHub repositories with the most stars ⭐
 
-|Retrato|Deitado|
+|Portrait|Landscape|
 |-|-|
-|![repositories-scroll-portrait.gif](doc/repositories-scroll-portrait.gif)|![repositories-scroll-landscape.gif](doc/repositories-scroll-landscape.gif)|
+|![list-and-search-portrait.gif](doc/list-and-search-portrait.gif)|![list-and-search-landscape.gif](doc/list-and-search-landscape.gif)|
 
-E também possui a funcionalidade de exibir as informações do repositório selecionado.
+And it also has the functionality to display the information of the selected repository.
 
-|Retrato|Deitado|
+|Portrait|Landscape|
 |-|-|
-|![repository-detail-portrait.gif](doc/repository-detail-portrait.gif)|![repository-detail-landscape.gif](doc/repository-detail-landscape.gif)|
+|![detail-portrait.gif](doc/detail-portrait.gif)|![detail-landscape.gif](doc/detail-landscape.gif)|

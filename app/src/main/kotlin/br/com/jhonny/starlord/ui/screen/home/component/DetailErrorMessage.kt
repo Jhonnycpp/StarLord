@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,11 +21,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.jhonny.starlord.R
-import br.com.jhonny.starlord.ui.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.ComponentPreview
+import br.com.jhonny.starlord.ui.preview.PreviewContentRender
 import br.com.jhonny.starlord.ui.screen.home.detail.OnDetailUiEvent
 import br.com.jhonny.starlord.ui.screen.home.detail.state.DetailUiEvent
-import br.com.jhonny.starlord.ui.theme.StarLordTheme
 
+/**
+ * A composable function that displays a generic error message for the detail screen.
+ * It includes an error image, a descriptive text, a "Retry" button to re-fetch data,
+ * and a "Back" button to navigate to the previous screen.
+ *
+ * @param modifier The [Modifier] to be applied to the layout.
+ * @param onUiEvent A lambda function that handles UI events, such as retrying the data fetch
+ *                  or navigating back. It's triggered by the "Retry" and "Back" buttons.
+ */
 @Composable
 public fun DetailErrorMessage(
     modifier: Modifier = Modifier,
@@ -91,13 +99,9 @@ public fun DetailErrorMessage(
 @ComponentPreview
 @Composable
 private fun ErrorMessagePreview() {
-    StarLordTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            DetailErrorMessage(
-                modifier = Modifier.padding(
-                    paddingValues = innerPadding
-                ),
-            )
-        }
+    PreviewContentRender { modifier ->
+        DetailErrorMessage(
+            modifier = modifier,
+        )
     }
 }

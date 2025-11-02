@@ -7,11 +7,34 @@ package br.com.jhonny.starlord.ui.screen.home.list.state
  */
 public sealed interface HomeUiEvent {
     /**
-     * Represents a user interface event indicating a request for more data.
-     * This event is typically triggered when the user scrolls to the end of a list
-     * or performs an action that requires loading additional items.
+     * Represents a user interface event indicating a request for more data,
+     * typically for pagination. This event is triggered when the user scrolls
+     * to the end of a list or performs an action that requires loading
+     * the next page of items.
+     *
+     * @property searchTerm The current search term being used, which is necessary
+     *                      to fetch the correct subsequent data.
+     * @property languages A list of selected languages to maintain the filter
+     *                     context while fetching more data.
      */
-    public data object RequestMoreData : HomeUiEvent
+    public data class RequestMoreData(
+        val searchTerm: String,
+        val languages: List<String>,
+    ) : HomeUiEvent
+
+    /**
+     * Represents a user interface event to initiate a search for repositories.
+     * This event is triggered when the user submits a search query, providing the
+     * necessary parameters to perform the search.
+     *
+     * @property searchTerm The search term entered by the user.
+     * @property languages A list of selected languages to filter the search results.
+     */
+    public data class SearchRepositories(
+        val searchTerm: String,
+        val languages: List<String>
+    ) : HomeUiEvent
+
     /**
      * Event to indicate that the repository information for a specific ID should be displayed.
      *

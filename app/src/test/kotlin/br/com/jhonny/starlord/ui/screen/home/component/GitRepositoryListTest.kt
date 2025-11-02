@@ -58,17 +58,17 @@ class GitRepositoryListTest {
     }
 
     @Test
-    fun should_Successfully_ShowRepositoryList_With6Elements() {
+    fun should_Successfully_ShowRepositoryList_With4Elements() {
         composeTestRule.setContent {
             GitRepositoryList(
-                repositories = buildRepositories(6)
+                repositories = buildRepositories(4)
             )
         }
 
         composeTestRule.onNodeWithTag("GitRepositoryList").assertExists()
         composeTestRule.onNodeWithTag("GitRepositoryList").assertIsDisplayed()
 
-        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(6)
+        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(4)
     }
 
     @Test

@@ -17,4 +17,11 @@
     <string name="error_home_retry_content_description">Retry fetch git repositories.</string>
     <string name="header_title">🌟 Github Repositories</string>
     <string name="repository_image_content_provider">This is an image represents the repository %1$s and created by %2$s</string>
+    <string name="search_input_language_header">Repositories with what languages?</string>
+    <string name="search_input_header_selected_languages">Selected languages</string>
+    <string name="search_input_clear_all_selected_languages">Clear all selected languages</string>
+    <string name="search_input_clear_selected_language">Remove %1$s from selected languages</string>
+    <string name="search_input_field_header">Find a repository</string>
+    <string name="search_input_placeholder">Query data by name, readme or description.</string>
+    <string name="search_input_clear_field">Clear search term</string>
 </resources>
