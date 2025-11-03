@@ -10,6 +10,7 @@ plugins {
 
 android {
     namespace = "br.com.jhonny.starlord"
+    testNamespace = "br.com.jhonny.starlord.test"
     compileSdk = 36
 
     defaultConfig {
@@ -19,7 +20,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "br.com.jhonny.starlord.KoinTestRunner"
     }
 
     buildTypes {
@@ -120,6 +121,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.di.koin.test)
+    androidTestImplementation(libs.di.koin.junit4)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
