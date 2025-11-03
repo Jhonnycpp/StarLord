@@ -12,6 +12,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -73,7 +74,19 @@ class AppIntegratedTest {
     }
 
     @Test
-    fun whenAppStarts_shouldDisplayListOfRepositories_and_go_to_detail() {
+    fun whenApiReturnsError_shouldDisplayErrorMessage() {
+        coEvery {
+            gitHubRepository.getRepositories(any(), any(), any(), any(), any())
+        } returns errorResponse
+
+        setContent()
+
+        composeTestRule.onNodeWithTag("HomeScreenError", useUnmergedTree = true)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun whenAppStarts_shouldDisplayListOfRepositories_and_go_to_detail_back_and_request_more_data() {
         coEvery {
             gitHubRepository.getRepositories(
                 query = any(),
@@ -82,7 +95,7 @@ class AppIntegratedTest {
                 order = any(),
                 perPage = any(),
             )
-        } returnsMany listOf(successResponse, Response.success(null), successResponse, Response.success(null))
+        } returnsMany listOf(buildSuccessResponse(), Response.success(null), buildSuccessResponse(), Response.success(null))
 
         setContent()
 
@@ -90,8 +103,8 @@ class AppIntegratedTest {
         composeTestRule.onNodeWithTag("HomeScreen", useUnmergedTree = true).assertIsDisplayed()
         composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertExists()
         composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(1)
 
-        composeTestRule.onRoot().printToLog("HomeScreen")
         composeTestRule.onNodeWithTag("RepositoryNameAndAuthor", useUnmergedTree = true)
             .assertTextContains("name by author")
 
@@ -102,7 +115,7 @@ class AppIntegratedTest {
             .assertTextContains("🍴 1")
 
         composeTestRule.onNodeWithTag("RepositoryLanguage", useUnmergedTree = true)
-            .assertTextContains("\uD83E\uDDD1\u200D\uD83D\uDCBB language")
+            .assertTextContains("\uD83E\uDDD1\u200D\uD83D\uDCBB kotlin")
 
         val itemsTree = composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true)
         val firstItem = itemsTree[0]
@@ -112,7 +125,6 @@ class AppIntegratedTest {
 
         composeTestRule.waitForIdle()
 
-        composeTestRule.onRoot().printToLog("DetailScreen")
         composeTestRule.onNodeWithText("name by author").assertIsDisplayed()
         composeTestRule.onNodeWithText("⭐ 1").assertIsDisplayed()
         composeTestRule.onNodeWithText("🍴 1").assertIsDisplayed()
@@ -120,7 +132,7 @@ class AppIntegratedTest {
         composeTestRule.onNodeWithText("⚠\uFE0F 1").assertIsDisplayed()
         composeTestRule.onNodeWithText("description").assertIsDisplayed()
         composeTestRule.onNodeWithText("License: Apache License 2.0").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Language: language").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Language: kotlin").assertIsDisplayed()
 
         val activity = composeTestRule.activity
 
@@ -136,15 +148,79 @@ class AppIntegratedTest {
     }
 
     @Test
-    fun whenApiReturnsError_shouldDisplayErrorMessage() {
+    fun whenAppStarts_shouldDisplayLustOfRepositories_and_search() {
         coEvery {
-            gitHubRepository.getRepositories(any(), any(), any(), any(), any())
-        } returns errorResponse
+            gitHubRepository.getRepositories(
+                query = any(),
+                sort = any(),
+                page = any(),
+                order = any(),
+                perPage = any(),
+            )
+        } returnsMany listOf(
+            buildSuccessResponse(), Response.success(null),
+            buildSuccessResponse(language = "java"), Response.success(null),
+            buildSuccessResponse(author = "jhonnycpp"), Response.success(null),
+        )
 
         setContent()
 
-        composeTestRule.onNodeWithTag("HomeScreenError", useUnmergedTree = true)
-            .assertIsDisplayed()
+        composeTestRule.onNodeWithTag("HomeScreen", useUnmergedTree = true).assertExists()
+        composeTestRule.onNodeWithTag("HomeScreen", useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertExists()
+        composeTestRule.onNodeWithTag("GitRepositoryList", useUnmergedTree = true).assertIsDisplayed()
+        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(1)
+
+        composeTestRule.onNodeWithTag("RepositoryNameAndAuthor", useUnmergedTree = true)
+            .assertTextContains("name by author")
+
+        composeTestRule.onNodeWithTag("RepositoryStarCount", useUnmergedTree = true)
+            .assertTextContains("⭐ 1")
+
+        composeTestRule.onNodeWithTag("RepositoryForkCount", useUnmergedTree = true)
+            .assertTextContains("🍴 1")
+
+        composeTestRule.onNodeWithTag("RepositoryLanguage", useUnmergedTree = true)
+            .assertTextContains("\uD83E\uDDD1\u200D\uD83D\uDCBB kotlin")
+
+        composeTestRule.onNodeWithTag("HomeScreenSearchInput").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("LanguageItem_java").performClick()
+
+        composeTestRule.mainClock.advanceTimeBy(600)
+        composeTestRule.waitForIdle()
+
+        composeTestRule.onRoot().printToLog("HomeScreen")
+        composeTestRule.onAllNodesWithTag("GitRepositoryItem", useUnmergedTree = true).assertCountEquals(1)
+
+        composeTestRule.onNodeWithTag("RepositoryNameAndAuthor", useUnmergedTree = true)
+            .assertTextContains("name by author")
+
+        composeTestRule.onNodeWithTag("RepositoryStarCount", useUnmergedTree = true)
+            .assertTextContains("⭐ 1")
+
+        composeTestRule.onNodeWithTag("RepositoryForkCount", useUnmergedTree = true)
+            .assertTextContains("🍴 1")
+
+        composeTestRule.onNodeWithTag("RepositoryLanguage", useUnmergedTree = true)
+            .assertTextContains("\uD83E\uDDD1\u200D\uD83D\uDCBB java")
+
+        composeTestRule.onNodeWithTag("RemoveLanguage_java").performClick()
+        composeTestRule.onNodeWithTag("RepositorySearchField").performTextInput("jhonnycpp")
+
+        composeTestRule.mainClock.advanceTimeBy(600)
+        composeTestRule.waitForIdle()
+
+        composeTestRule.onNodeWithTag("RepositoryNameAndAuthor", useUnmergedTree = true)
+            .assertTextContains("name by jhonnycpp")
+
+        composeTestRule.onNodeWithTag("RepositoryStarCount", useUnmergedTree = true)
+            .assertTextContains("⭐ 1")
+
+        composeTestRule.onNodeWithTag("RepositoryForkCount", useUnmergedTree = true)
+            .assertTextContains("🍴 1")
+
+        composeTestRule.onNodeWithTag("RepositoryLanguage", useUnmergedTree = true)
+            .assertTextContains("\uD83E\uDDD1\u200D\uD83D\uDCBB kotlin")
     }
 
     private fun setContent() {
@@ -159,33 +235,40 @@ class AppIntegratedTest {
         }
     }
 
-    private companion object {
-        val successResponse: Response<GitHubRepositoryResponse> = Response.success(
+    private fun buildSuccessResponse(
+        language: String? = "kotlin",
+        author: String = "author",
+    ): Response<GitHubRepositoryResponse> {
+        val dto = GitHubRepositoryDTO(
+            id = 1,
+            name = "name",
+            description = "description",
+            owner = RepositoryOwnerDTO(
+                author = author,
+                avatar = "avatar",
+            ),
+            language = language,
+            license = LicenseDTO("Apache License 2.0"),
+            createdAt = "1970-01-01T00:00:00.00Z",
+            updatedAt = "1970-01-01T00:00:00.00Z",
+            pushedAt = "1970-01-01T00:00:00.00Z",
+            forksCount = 1,
+            watchersCount = 1,
+            openIssuesCount = 1,
+            starCount = 1,
+        )
+
+        return Response.success(
             GitHubRepositoryResponse(
                 items = listOf(
-                    GitHubRepositoryDTO(
-                        id = 1,
-                        name = "name",
-                        description = "description",
-                        owner = RepositoryOwnerDTO(
-                            author = "author",
-                            avatar = "avatar",
-                        ),
-                        language = "language",
-                        license = LicenseDTO("Apache License 2.0"),
-                        createdAt = "1970-01-01T00:00:00.00Z",
-                        updatedAt = "1970-01-01T00:00:00.00Z",
-                        pushedAt = "1970-01-01T00:00:00.00Z",
-                        forksCount = 1,
-                        watchersCount = 1,
-                        openIssuesCount = 1,
-                        starCount = 1,
-                    )
+                    dto,
                 ),
                 totalCount = 1,
             )
         )
+    }
 
+    private companion object {
         val errorResponse: Response<GitHubRepositoryResponse> = Response.error(
             404,
             "{\"message\":\"Not Found\"}".toResponseBody(null)
