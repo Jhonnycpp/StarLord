@@ -80,6 +80,7 @@ internal fun GitRepositoryItem(
             text = stringResource(R.string.repository_name_and_author, item.name, item.author),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
+                .testTag("RepositoryNameAndAuthor")
                 .padding(start = 8.dp),
         )
 
@@ -92,11 +93,15 @@ internal fun GitRepositoryItem(
             Text(
                 text = "⭐ ${item.starCount}",
                 style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .testTag("RepositoryStarCount")
             )
 
             Text(
                 text = "🍴 ${item.forkCount}",
                 style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .testTag("RepositoryForkCount")
             )
         }
         Row(
@@ -106,8 +111,10 @@ internal fun GitRepositoryItem(
                 .padding(start = 8.dp, end = 8.dp, bottom = 4.dp),
         ) {
             Text(
-                text = "\uD83E\uDDD1\u200D\uD83D\uDCBB ${item.language}",
+                text = "\uD83E\uDDD1\u200D\uD83D\uDCBB ${item.language.orEmpty()}",
                 style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .testTag("RepositoryLanguage")
             )
         }
     }

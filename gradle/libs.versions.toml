@@ -68,10 +68,12 @@ flow-test-turbine = { group = "app.cash.turbine", name = "turbine", version.ref 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+di-koin-test = { group = "io.insert-koin", name = "koin-android-test", version.ref = "koinBom" }
+di-koin-junit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koinBom" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover"}
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
