@@ -86,7 +86,7 @@ class AppIntegratedTest {
     }
 
     @Test
-    fun whenAppStarts_shouldDisplayListOfRepositories_and_go_to_detail_back_and_request_more_data() {
+    fun shouldNavigateToDetailAndPaginateOnReturn() {
         coEvery {
             gitHubRepository.getRepositories(
                 query = any(),
@@ -148,7 +148,7 @@ class AppIntegratedTest {
     }
 
     @Test
-    fun whenAppStarts_shouldDisplayLustOfRepositories_and_search() {
+    fun shouldSearchAndFilterRepositoriesCorrectly() {
         coEvery {
             gitHubRepository.getRepositories(
                 query = any(),
