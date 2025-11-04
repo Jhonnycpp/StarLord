@@ -2,8 +2,7 @@
 
 StarLord is a project developed for Android using Kotlin.
 
-The application's purpose is to list GitHub repositories with the most stars ⭐
-that are written in the Kotlin language.
+The application's purpose is to list GitHub repositories with the most stars ⭐.
 
 ## 🚀 Getting Started
 
