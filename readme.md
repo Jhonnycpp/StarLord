@@ -55,13 +55,14 @@ StarLord/
 
 This project uses a modern set of technologies for Android development:
 - Language: Kotlin
-- Architecture: 
+- Architecture:
   - Clean Architecture: This is a software architecture that aims to separate your code's concerns into distinct layers (such as Domain, Use Cases, Interface Adapters, and Frameworks & Drivers). The goal is to create a more testable, maintainable, and independent system from external frameworks or implementation details.
-  - MVVM: This is a presentation architecture (part of the "Interface Adapters" layer in Clean Architecture) that facilitates the separation of presentation logic from the UI.
-    - Model: Represents the data and business logic (usually coming from the Domain/Use Cases layer in Clean Architecture).
-    - View: The UI (in your case, implemented with Jetpack Compose) that observes the ViewModel.
-    - ViewModel: Exposes data from the Model to the View and handles presentation logic and user interactions. It has no direct knowledge of the View.
+  - MVI (Model-View-Intent): This is a presentation architecture that follows a Unidirectional Data Flow (UDF) pattern.
+    - Model: Represents the state of the UI.
+    - View: A passive interface that displays the state and forwards user intents.
+    - Intent: Represents an intention or an action from the user that will modify the state.
 - Code Design Principles:
+  - UDF (Unidirectional Data Flow): The state flows down from the ViewModel to the UI, and events/intents flow up from the UI to the ViewModel. This makes the data flow predictable and easier to debug.
   - SOLID: We adopted the five SOLID principles (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion) as a guide to writing high-quality code, promoting the project's maintainability, testability, and scalability.
 - User Interface:
   - Jetpack Compose for a declarative and modern UI.

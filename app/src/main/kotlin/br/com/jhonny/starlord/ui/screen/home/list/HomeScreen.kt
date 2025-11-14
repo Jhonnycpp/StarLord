@@ -164,8 +164,6 @@ private fun HomeContent(
                     }
                 },
                 onSearchTermChanged = { searchTerm = it },
-                onLoadMore = { onUiEvent(HomeUiEvent.RequestMoreData(searchTerm, selectedLanguages)) },
-                onItemClick = { onUiEvent(HomeUiEvent.ShowRepositoryInfo(it.id)) }
             )
         } else {
             HomeLandscape(
@@ -184,8 +182,6 @@ private fun HomeContent(
                     }
                 },
                 onSearchTermChanged = { searchTerm = it },
-                onLoadMore = { onUiEvent(HomeUiEvent.RequestMoreData(searchTerm, selectedLanguages)) },
-                onItemClick = { onUiEvent(HomeUiEvent.ShowRepositoryInfo(it.id)) }
             )
         }
     }
@@ -201,8 +197,6 @@ private fun HomeLandscape(
     onSearchTermChanged: (String) -> Unit,
     onLanguageToggled: (String) -> Unit,
     onClearSelectedLanguages: () -> Unit,
-    onLoadMore: () -> Unit,
-    onItemClick: (RepositoryVO) -> Unit,
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -262,8 +256,8 @@ private fun HomeLandscape(
 
                 GitRepositoryList(
                     repositories = repositories,
-                    onLoadMore = onLoadMore,
-                    onItemClick = onItemClick,
+                    onLoadMore = { onUiEvent(HomeUiEvent.RequestMoreData(searchTerm, selectedLanguages)) },
+                    onItemClick = { onUiEvent(HomeUiEvent.ShowRepositoryInfo(it.id)) }
                 )
             }
         }
@@ -280,8 +274,6 @@ private fun HomePortrait(
     onSearchTermChanged: (String) -> Unit,
     onLanguageToggled: (String) -> Unit,
     onClearSelectedLanguages: () -> Unit,
-    onLoadMore: () -> Unit,
-    onItemClick: (RepositoryVO) -> Unit,
 ) {
 
     Column(
@@ -305,8 +297,8 @@ private fun HomePortrait(
 
         GitRepositoryList(
             repositories = repositories,
-            onLoadMore = onLoadMore,
-            onItemClick = onItemClick,
+            onLoadMore = { onUiEvent(HomeUiEvent.RequestMoreData(searchTerm, selectedLanguages)) },
+            onItemClick = { onUiEvent(HomeUiEvent.ShowRepositoryInfo(it.id)) }
         )
     }
 }
